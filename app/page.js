@@ -1,11 +1,13 @@
-import Image from 'next/image'
+import LandingPage1 from "@/components/LandingPageComps/LandingPage1";
+import Nav from "@/components/Nav";
+import Image from "next/image";
+
 
 export default function Home() {
   return (
     <div>
-      <div></div>
-
-      <div></div>
+      <Nav />
+      <LandingPage1 />
     </div>
   )
 }
