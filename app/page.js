@@ -9,7 +9,7 @@ import Nav from "@/components/Nav";
 export default function Home() {
   return (
     <div>
-      <Nav />
+      <Nav route="/" />
       <LandingPage1 />
       <LandingPage2 />
       <LandingPage3 />
