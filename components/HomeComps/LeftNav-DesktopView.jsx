@@ -37,7 +37,7 @@ export default async function LeftNavDesktop () {
                         {
                             team.map((item, index) => {
                                 return (
-                                    <button className=" select-none font-semibold border-2 mx-2 flex justify-between items-center px-4 py-1 text-black rounded-md" key={index}>
+                                    <button className=" select-none font-light border-2 mx-2 flex justify-between items-center border-[#79abfd] px-4 py-1  rounded-md" key={index}>
                                         {item.name}
                                     </button>
                                 )

@@ -14,7 +14,7 @@ function GradientCard(props) {
 
 export default function LandingPage2() {
     return (
-        <div className="h-lvh flex justify-normal sm:justify-start  items-center px-[50px] lg:px-[200px] ">
+        <div id="features" className="h-lvh flex justify-normal sm:justify-start  items-center px-[50px] lg:px-[200px] ">
             <div className="flex flex-col gap-14"> 
                 <p className=" text-md md:text-xl font-semibold text-blue-500">FEATURE</p>
                 <p className=" text-pretty md:w-[610px] font-bold text-2xl md:text-4xl">Bring your team together with this team collaboration software</p>

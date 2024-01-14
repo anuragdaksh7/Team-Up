@@ -14,8 +14,8 @@ export default function Nav(props) {
                         <Link className="hover:scale-105 hover:text-blue-500 duration-200" href="/home">Home</Link>
                     }
                     <Link className="hover:scale-105 hover:text-blue-500 duration-200" href="/">About</Link>
-                    <Link className="hover:scale-105 hover:text-blue-500 duration-200" href="/">Features</Link>
-                    <Link className="hover:scale-105 hover:text-blue-500 duration-200" href="/">GitHub</Link>
+                    <Link className="hover:scale-105 hover:text-blue-500 duration-200" href="#features">Features</Link>
+                    <Link className="hover:scale-105 hover:text-blue-500 duration-200" href="https://github.com/anuragdaksh7/Team-Up" target="blank">GitHub</Link>
                 </div>
             </div>
         // </div>
