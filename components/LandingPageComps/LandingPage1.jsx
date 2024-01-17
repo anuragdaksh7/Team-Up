@@ -18,9 +18,9 @@ export default function LandingPage1() {
                         href="/sign-up"
                     >Get Started</Link>
                     <Link
-                        className="text-xs w-fit md:text-lg bg-[#264b85] px-4 py-2 rounded-full hover:scale-105 duration-200"
-                        href="/sign-up"
-                    >Get Started</Link>
+                        className="text-xs w-fit md:text-lg bg-[#264b85] px-8 py-2 rounded-full hover:scale-105 duration-200"
+                        href="/sign-in"
+                    >LogIn</Link>
                 </div>
             </div>
         </div>

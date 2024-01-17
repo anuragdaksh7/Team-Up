@@ -25,7 +25,7 @@ export default async function LeftNavDesktop () {
             <div className="h-full flex flex-col px-6 border-r-2 pb-16 justify-between">
                 <div className="">
                     <br />
-                    <Link href="/" className="font-semibold w-full bg-[#3A82F7] py-2 px-4 rounded-md" >Create a New Team</Link>
+                    <Link href="/createTeam" className="font-semibold w-full bg-[#3A82F7] py-2 px-4 rounded-md" >Create a New Team</Link>
                     <br />
                     <br />
                     <div className=" font-semibold w-full outline-none rounded-md bg-[#3A82F7]">
