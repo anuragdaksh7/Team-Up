@@ -11,15 +11,14 @@ export default function CreateTeamForm(props) {
         e.preventDefault();
         console.log("submit");
 
-        const data = {
-            tName: teamName,
-            tDesc: teamDescription,
-            userId: props.userId
+        const payload = {
+            teamName: teamName,
+            teamDesc: teamDescription
         }
 
-        const response = await axios.get("/api/createTeam");
-        const d = await response.data;
-        console.log(d);
+        const response = await axios.post("/api/createTeam", payload);
+        const data = await response.data;
+        console.log(data);
     }
 
     const [teamName, setTeamName] = useState("");

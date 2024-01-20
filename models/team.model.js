@@ -13,31 +13,22 @@ mongoose.connect(URL, {
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    username: {
+
+const TeamsSchema = new Schema({
+    teamName: {
         type: String,
         required: true
     },
-    userId: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    status: {
-        type: String,
-        required: true
-    },
-    teams: [
+    members: [
         {
             type: Schema.Types.ObjectId,
-            ref: "Teams"
+            ref: "Users"
         }
-    ]
+    ],
+    teamDesc: {
+        type: String,
+        required: true
+    }
 })
 
-export const Individual = mongoose.models["Users"] || mongoose.model("Users",UserSchema);
+export const Teams = mongoose.models["Teams"] || mongoose.model("Teams",TeamsSchema);
