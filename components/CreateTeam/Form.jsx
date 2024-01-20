@@ -1,20 +1,30 @@
 "use client"
+// import { auth } from "@clerk/nextjs";
 import { useState } from "react";
+import axios from "axios";
 
 
+export default function CreateTeamForm(props) {
+    // const {userId} = auth();
 
-export default function CreateTeamForm() {
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("submit");
+
         const data = {
             tName: teamName,
-            tDesc: teamDescription
+            tDesc: teamDescription,
+            userId: props.userId
         }
-        console.log(data);
+
+        const response = await axios.get("/api/createTeam");
+        const d = await response.data;
+        console.log(d);
     }
+
     const [teamName, setTeamName] = useState("");
     const [teamDescription, setTeamDescription] = useState("");
+
     return (
         <div className="flex justify-center items-center h-[80lvh] ">
             <form className=" bg-[#161616] w-2/3 p-4 grid grid-flow-row-dense grid-cols-4 gap-4" onSubmit={handleSubmit}>
@@ -28,7 +38,7 @@ export default function CreateTeamForm() {
                     <label className="font-semibold">Team Description</label>
                 </div>
                 <div className=" col-span-3">
-                    <textarea rows={5} className="w-full bg-[#232323] outline-none px-3 text-gray-400 font-semibold text-md rounded-md py-1" type="text" value={teamDescription} onChange={(e) => setTeamDescription(e.target.value)} />
+                    <textarea rows={5} className="w-full resize-none bg-[#232323] outline-none px-3 text-gray-400 font-semibold text-md rounded-md py-1" type="text" value={teamDescription} onChange={(e) => setTeamDescription(e.target.value)} />
                 </div>
                 <div className="col-span-4 flex justify-center">
                     <button className=" bg-[#3A82F7] px-4 py-2 rounded-md" >Create Team</button>

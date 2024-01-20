@@ -6,7 +6,7 @@ export default function Page () {
     return (
         <div>
             <Nav route="home" />
-            <div className="h-screen flex">
+            <div className=" flex">
                 <LeftNavDesktop />
                 <MainComponent />
             </div>

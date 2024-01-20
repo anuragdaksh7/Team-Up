@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <div>
             <Nav />
-            <CreateTeamForm />
+            <CreateTeamForm userId={userId}/>
         </div>
     )
 }
