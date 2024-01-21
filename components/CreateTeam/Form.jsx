@@ -2,10 +2,12 @@
 // import { auth } from "@clerk/nextjs";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 export default function CreateTeamForm(props) {
     // const {userId} = auth();
+    const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,7 +20,10 @@ export default function CreateTeamForm(props) {
 
         const response = await axios.post("/api/createTeam", payload);
         const data = await response.data;
-        console.log(data);
+        if (data.success) {
+            router.push("/home")
+        }
+        console.log(data.success);
     }
 
     const [teamName, setTeamName] = useState("");

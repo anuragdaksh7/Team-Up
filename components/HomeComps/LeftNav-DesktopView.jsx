@@ -1,7 +1,8 @@
+
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { MdArrowDropDown } from "react-icons/md";
 import { currentUser } from "@clerk/nextjs";
+import ViewTeams from "./ViewTeams";
 
 function TeamButtonComponent(props) {
     return (
@@ -16,21 +17,6 @@ function TeamButtonComponent(props) {
 export default async function LeftNavDesktop() {
 
     const user = await currentUser();
-    const team = [
-        {
-            "name": "Team 1"
-        },
-        {
-            "name": "Team 2"
-        },
-        {
-            "name": "Team 3"
-        },
-        {
-            "name": "Team 4"
-        },
-    ]
-
     return (
         <div className="h-[90lvh] w-1/5 flex flex-col px-6 border-r-2  justify-between">
 
@@ -40,23 +26,7 @@ export default async function LeftNavDesktop() {
                     className="font-semibold w-full bg-[#262626] py-2 px-4 rounded-md "
                 >Create a New Team</Link>
 
-                <div className=" mt-6 font-semibold w-full outline-none rounded-md bg-[#262626]">
-                    <div className="flex justify-between items-center px-4 py-2">
-                        <div>All Teams</div>
-                        <MdArrowDropDown />
-                    </div>
-
-                    <div className="flex flex-col gap-2 pb-2">
-                        {
-                            team.map((item, index) => {
-                                return (
-                                    <TeamButtonComponent name={item.name} key={index} />
-                                )
-                            })
-                        }
-                    </div>
-
-                </div>
+                <ViewTeams />
             </div>
 
             <div>
