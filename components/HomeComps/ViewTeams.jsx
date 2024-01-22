@@ -1,16 +1,18 @@
 "use client"
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 
 
 function TeamButtonComponent(props) {
     return (
-        <button
+        <Link
+            href = {"/Teams/"+props.id}
             className="select-none font-light border-2 mx-2 flex justify-between items-center border-[#434343] px-4 py-1 hover:bg-[#434343] duration-200  rounded-md"
         >
             {props.name}
-        </button>
+        </Link>
     )
 }
 
@@ -30,12 +32,12 @@ export default function ViewTeams() {
             "name": "Team 4"
         },
     ]
-    const [userTeams, setUserTeams] = useState([]);
+    const [userTeams, setUserTeams] = useState(Array());
     const getTeams = async () => {
         const response = await axios.get("/api/getTeams");
         const data = await response.data;
         setUserTeams(data);
-        console.log(data, userTeams);
+        // console.log(data, userTeams);
     }
     useEffect(() => {
         getTeams();
@@ -50,11 +52,11 @@ export default function ViewTeams() {
 
             <div className="flex flex-col gap-2 pb-2">
                 {
-                    userTeams.map((item, index) => {
+                    (userTeams.length>=1)?userTeams.map((item, index) => {
                         return (
                             <TeamButtonComponent id={item._id} name={item.teamName} desc={item.teamDesc} key={index} />
                         )
-                    })
+                    }):<div></div>
                 }
 
             </div>
