@@ -11,6 +11,16 @@ export default function Page({ params }) {
     const tID = params.TeamId;
     const [code, setCode] = useState("");
     const [permission, setPermission] = useState(false);
+    const [team, setTeam] = useState({});
+
+    const fetchTeam = async () => {
+        const payload = { tId: tID };
+        const response = await axios.post("/api/getTeamName", payload);
+        const data = await response.data;
+        setTeam(data.team);
+        console.log(data,team);
+    }
+
     const check = async () => {
         const payload = { "teamId": tID };
         console.log(payload);
@@ -21,6 +31,7 @@ export default function Page({ params }) {
             router.push("/home")
         }
         else {
+            fetchTeam();
             setPermission(true);
         }
     }
@@ -51,27 +62,53 @@ export default function Page({ params }) {
     return (
         <div>
             <Nav />
-            <div className=" flex justify-between px-4">
-                {
-                    (permission) ? <div>Team {params.TeamId}</div> : <div>thyfgcjf</div>
-                }
-                <div className="bg-blue-600 rounded-md py-2 flex flex-col gap-2 px-4">
-                    <button onClick={generateLink} className=" ">
-                        Invite friends
-                    </button>
-                    {
-                        (code != "") ? <div className="flex justify-between items-center gap-2">
-                            <p className=" flex  bg-blue-600">{code}</p>
-                            {
-                                (!copied)?<FaRegCopy className=" cursor-pointer" onClick={(e) => {
-                                    setCopied(true);
-                                    navigator.clipboard.writeText(code);
-                                }} />:<FaCopy className=" cursor-pointer" />
-                            }
-                        </div>:<></>
-                    }
-                </div>
-            </div>
+            {
+                (permission) ? (
+                    <div className=" flex flex-col  px-4">
+
+                        <div className="flex justify-between">
+                            <div className="flex items-center">Team {params.TeamId}</div>
+
+                            <div className="bg-blue-600 rounded-md py-2 flex flex-col gap-2 px-4">
+                                <button onClick={generateLink} className=" ">
+                                    Invite friends
+                                </button>
+                                {
+                                    (code != "") ? <div className="flex justify-between items-center gap-2">
+                                        <p className=" flex  bg-blue-600">{code}</p>
+                                        {
+                                            (!copied) ? <FaRegCopy className=" cursor-pointer" onClick={(e) => {
+                                                setCopied(true);
+                                                navigator.clipboard.writeText(code);
+                                            }} /> : <FaCopy className=" cursor-pointer" />
+                                        }
+                                    </div> : <></>
+                                }
+                            </div>
+                        </div>
+
+                        <div className="flex">
+                            <div className="h-[85lvh] w-1/5 flex flex-col px-6 border-r-2  ">
+                                {
+                                    (team!={})?(
+                                        <>
+                                            <p>{team.teamName}</p>
+                                            <p>{team.teamDesc}</p>
+                                            <p>{team.leader}</p>
+                                            {
+                                                team?.members?.map((item,index) => {
+                                                    return <p>{item}</p>
+                                                })
+                                            }
+                                        </>
+                                    ):<></>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                ) : <>Loading</>
+            }
         </div>
     )
 }

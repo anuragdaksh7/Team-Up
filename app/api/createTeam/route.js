@@ -20,7 +20,7 @@ export async function POST(request) {
   if (!individual) {
     const newIndividual = new Individual({
       email: user.emailAddresses[0].emailAddress,
-      username: user.emailAddresses[0].emailAddress,
+      username: user.firstName,
       userId: userId,
       status: "active",
       teams: []
