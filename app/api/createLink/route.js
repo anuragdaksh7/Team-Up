@@ -9,8 +9,8 @@ export async function POST(request) {
     }
     const str = team._id.toString();
     const shuffle = str => [...str].sort(()=>Math.random()-.5).join('');
-    const newLink = shuffle(str)+ (Math.random().toString()).split('.').join('');
-    console.log(newLink);
+    const newLink = shuffle(str).slice(0,9);
+    // console.log(newLink);
     team.inviteLink = newLink;
     team.save();
     return Response.json({status: true, link: newLink});
