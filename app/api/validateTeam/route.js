@@ -13,7 +13,7 @@ export async function POST(request) {
         return Response.json({sucess: false});
     }
     const teams = await individual.teams;
-    console.log(teams,data)
+    // console.log(teams,data)
     if (teams.includes(`${data.teamId}`)) {
         return Response.json({sucess: true});
     }

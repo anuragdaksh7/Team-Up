@@ -25,6 +25,10 @@ const TeamsSchema = new Schema({
             ref: "Users"
         }
     ],
+    leader: {
+        type: Schema.Types.ObjectId,
+        ref: "Users"
+    },
     teamDesc: {
         type: String,
         required: true
