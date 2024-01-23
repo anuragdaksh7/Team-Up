@@ -10,12 +10,12 @@ export async function POST(request) {
         userId: userId
     });
     if (!individual) {
-        return Response.json({sucess: false});
+        return Response.json({success: false});
     }
     const teams = await individual.teams;
     // console.log(teams,data)
     if (teams.includes(`${data.teamId}`)) {
-        return Response.json({sucess: true});
+        return Response.json({success: true});
     }
-    return Response.json({sucess: false});
+    return Response.json({success: false});
 }

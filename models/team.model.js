@@ -32,6 +32,9 @@ const TeamsSchema = new Schema({
     teamDesc: {
         type: String,
         required: true
+    },
+    inviteLink: {
+        type: String,
     }
 })
 

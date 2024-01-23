@@ -14,7 +14,7 @@ export default function Page({ params }) {
         const response = await axios.post("/api/validateTeam", payload);
         const data = await response.data;
         console.log(data)
-        if (!data.sucess) {
+        if (!data.success) {
             router.push("/home")
         }
         else {
@@ -30,8 +30,12 @@ export default function Page({ params }) {
         const response = await axios.post("/api/getLeader", payload);
         const data = await response.data;
         console.log(data)
-        if (data.sucess) {
-            console.log("leader")
+        if (data.success) {
+            console.log("leader");
+            const payload = { "tId": params.TeamId };
+            const response = await axios.post("/api/createLink", payload);
+            const data = await response.data;
+            console.log(data);
         }
         else {
             alert("Only Team Leader can generate invite links!!")

@@ -17,15 +17,16 @@ export async function POST(request) {
       return Response.json({ status: false });
     }
 
+
     const individual = await Individual.findOne({
         userId: userId
     });
     if (!individual) {
-        return Response.json({sucess: false});
+        return Response.json({success: false});
     }
     if (individual._id.toString() == team.leader.toString()) {
-        return Response.json({sucess: true});
+        return Response.json({success: true});
     }
-    return Response.json({sucess: false});
+    return Response.json({success: false});
     
 }
