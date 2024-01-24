@@ -67,7 +67,7 @@ export default function Page({ params }) {
                     <div className=" flex flex-col  px-4">
 
                         <div className="flex justify-between">
-                            <div className="flex items-center">Team {params.TeamId}</div>
+                            <div className="flex items-center capitalize font-bold text-2xl select-none">{(team.teamName)?team.teamName:"Team Name"}</div>
 
                             <div className="bg-blue-600 rounded-md py-2 flex flex-col gap-2 px-4">
                                 <button onClick={generateLink} className=" ">
@@ -88,19 +88,28 @@ export default function Page({ params }) {
                         </div>
 
                         <div className="flex">
-                            <div className="h-[85lvh] w-1/5 flex flex-col px-6 border-r-2  ">
+                            <div className="h-[85lvh] w-1/5 flex flex-col px-6 border-r-2 py-2 ">
                                 {
                                     (team!={})?(
                                         <>
-                                            <p>Team Name -&gt; {team.teamName}</p>
-                                            <p>Description -&gt; {team.teamDesc}</p>
-                                            <p>Leader -&gt; {team.leader}</p>
-                                            <p>Members -&gt; </p>
-                                            {
-                                                team?.members?.map((item,index) => {
-                                                    return <p>-&gt; {item}</p>
-                                                })
-                                            }
+                                            {/* <p>Description -&gt; {team.teamDesc}</p> */}
+                                            <h1 className="text-xl font-semibold text-blue-500 mb-2">Members</h1>
+                                            <div className="bg-blue-400 px-4 py-3 rounded-md flex flex-col gap-3">
+                                                {/* <p>Leader -&gt; {team.leader}</p> */}
+                                                <div className="bg-blue-500 ps-2 py-1 rounded-md">
+                                                    <p className="underline underline-offset-2 font-bold">Leader</p>
+                                                    <p className="ps-2">{team.leader}</p>
+                                                </div>
+                                                <div className="bg-blue-500 ps-2 py-1 rounded-md ">
+                                                    {/* <p>Members -&gt; </p> */}
+                                                    <p className="underline underline-offset-2 font-bold">Members</p>
+                                                    {
+                                                        team?.members?.map((item,index) => {
+                                                            return <p className="ps-2">{item}</p>
+                                                        })
+                                                    }
+                                                </div>
+                                            </div>
                                         </>
                                     ):<></>
                                 }
@@ -108,7 +117,9 @@ export default function Page({ params }) {
                         </div>
 
                     </div>
-                ) : <>Loading</>
+                ) : <div className=" flex justify-center items-center h-[80lvh]">
+                    Loading...
+                </div>
             }
         </div>
     )
