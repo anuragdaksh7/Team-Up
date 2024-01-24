@@ -92,12 +92,13 @@ export default function Page({ params }) {
                                 {
                                     (team!={})?(
                                         <>
-                                            <p>{team.teamName}</p>
-                                            <p>{team.teamDesc}</p>
-                                            <p>{team.leader}</p>
+                                            <p>Team Name -&gt; {team.teamName}</p>
+                                            <p>Description -&gt; {team.teamDesc}</p>
+                                            <p>Leader -&gt; {team.leader}</p>
+                                            <p>Members -&gt; </p>
                                             {
                                                 team?.members?.map((item,index) => {
-                                                    return <p>{item}</p>
+                                                    return <p>-&gt; {item}</p>
                                                 })
                                             }
                                         </>
