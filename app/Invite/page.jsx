@@ -16,8 +16,9 @@ export default function Page() {
         const payload = { invite: code };
         const response = await axios.post("/api/joinTeam", payload);
         const data = await response.data;
-        setJoined(data.success);
-        if (data.success) {
+        console.log("data",data)
+        setJoined(data.status);
+        if (data.status) {
             alert("Joined");
             router.push("/home");
         }

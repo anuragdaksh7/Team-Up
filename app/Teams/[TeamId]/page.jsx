@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaCopy, FaRegCopy } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { UserButton, currentUser } from "@clerk/nextjs";
 
 export default function Page({ params }) {
     const [copied, setCopied] = useState(false);
@@ -18,7 +19,7 @@ export default function Page({ params }) {
         const response = await axios.post("/api/getTeamName", payload);
         const data = await response.data;
         setTeam(data.team);
-        console.log(data,team);
+        console.log(data, team);
     }
 
     const check = async () => {
@@ -67,7 +68,7 @@ export default function Page({ params }) {
                     <div className=" flex flex-col  px-4">
 
                         <div className="flex justify-between">
-                            <div className="flex items-center capitalize font-bold text-2xl select-none">{(team.teamName)?team.teamName:"Team Name"}</div>
+                            <div className="flex items-center capitalize font-bold text-2xl select-none">{(team.teamName) ? team.teamName : "Team Name"}</div>
 
                             <div className="bg-blue-600 rounded-md py-2 flex flex-col gap-2 px-4">
                                 <button onClick={generateLink} className=" ">
@@ -88,30 +89,40 @@ export default function Page({ params }) {
                         </div>
 
                         <div className="flex">
-                            <div className="h-[85lvh] w-1/5 flex flex-col px-6 border-r-2 py-2 ">
+                            <div className="h-[85lvh] w-1/5 flex flex-col px-6 border-r-2 py-2 justify-between ">
                                 {
-                                    (team!={})?(
+                                    (team != {}) ? (
                                         <>
-                                            {/* <p>Description -&gt; {team.teamDesc}</p> */}
-                                            <h1 className="text-xl font-semibold text-blue-500 mb-2">Members</h1>
-                                            <div className="bg-blue-400 px-4 py-3 rounded-md flex flex-col gap-3">
-                                                {/* <p>Leader -&gt; {team.leader}</p> */}
-                                                <div className="bg-blue-500 ps-2 py-1 rounded-md">
-                                                    <p className="underline underline-offset-2 font-bold">Leader</p>
-                                                    <p className="ps-2">{team.leader}</p>
+                                            <div>
+                                                {/* <p>Description -&gt; {team.teamDesc}</p> */}
+                                                <h1 className="text-xl font-semibold text-blue-500 mb-2">Members</h1>
+                                                <div className="bg-blue-400 px-4 py-3 rounded-md flex flex-col gap-3">
+                                                    {/* <p>Leader -&gt; {team.leader}</p> */}
+                                                    <div className="bg-blue-500 ps-2 py-1 rounded-md">
+                                                        <p className="underline underline-offset-2 font-bold">Leader</p>
+                                                        <p className="ps-2">{team.leader}</p>
+                                                    </div>
+                                                    <div className="bg-blue-500 ps-2 py-1 rounded-md ">
+                                                        {/* <p>Members -&gt; </p> */}
+                                                        <p className="underline underline-offset-2 font-bold">Members</p>
+                                                        {
+                                                            team?.members?.map((item, index) => {
+                                                                return <p key={index} className="ps-2">{item}</p>
+                                                            })
+                                                        }
+                                                    </div>
                                                 </div>
-                                                <div className="bg-blue-500 ps-2 py-1 rounded-md ">
-                                                    {/* <p>Members -&gt; </p> */}
-                                                    <p className="underline underline-offset-2 font-bold">Members</p>
-                                                    {
-                                                        team?.members?.map((item,index) => {
-                                                            return <p className="ps-2">{item}</p>
-                                                        })
-                                                    }
+                                            </div>
+                                            <div className="flex flex-col gap-3">
+                                                <button className="bg-blue-500 w-full py-2 rounded-md">
+                                                    Add New Task?
+                                                </button>
+                                                <div className="w-full bg-[#232323] py-2 px-2 rounded-md">
+                                                    <UserButton afterSignOutUrl="/" />
                                                 </div>
                                             </div>
                                         </>
-                                    ):<></>
+                                    ) : <></>
                                 }
                             </div>
                         </div>

@@ -1,8 +1,11 @@
-
+// "use client"
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { currentUser } from "@clerk/nextjs";
 import ViewTeams from "./ViewTeams";
+import axios from "axios";
+import RegisterUser from "./RegisterUser";
+// import { useEffect } from "react";
 
 function TeamButtonComponent(props) {
     return (
@@ -15,11 +18,18 @@ function TeamButtonComponent(props) {
 }
 
 export default async function LeftNavDesktop() {
+    const registerNewUser = async () => {
+        await axios.post("/createUser");
+    }
+    // registerNewUser();
+    // useEffect(()=>{
+    //     registerNewUser();
+    // },[])
 
     const user = await currentUser();
     return (
         <div className="h-[90lvh] w-1/5 flex flex-col px-6 border-r-2  justify-between">
-
+            <RegisterUser />
             <div className="py-2">
                 <div className="flex flex-col gap-4">
                     <Link
