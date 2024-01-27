@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function UserPage( props ) {
 
+    const [visible, setVisible] = useState(false);
     const changeActivityStatus = async (status) => {
         console.log(status);
         const response = await axios.post("/api/UserControls/ChangeStatus", {status: status});
@@ -14,6 +15,7 @@ export default function UserPage( props ) {
         if (data.success) {
             alert("Status Changed!");
             setCurrStatus(status);
+            setVisible(false);
         } else {
             alert(data.error);
         }
@@ -27,7 +29,6 @@ export default function UserPage( props ) {
         "away" : "#c27e00"
     }
     const [currStatus, setCurrStatus] = useState("active");
-    const [visible, setVisible] = useState(false);
     const currColor = colorObj[props.status];
     console.log(currColor);
     return (
