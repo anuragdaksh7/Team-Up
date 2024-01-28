@@ -79,6 +79,19 @@ export default function Page({ params }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(task,date);
+        const payload = {
+            title: task,
+            status: false,
+            dueDate: date
+        }
+        const response = await axios.post("/api/UserControls/CreateTask",payload);
+        const data = await response.data;
+        if (data.success) {
+            alert(data.message);
+            setVisible(false);
+            setTask("");
+            setDate("");
+        }
     }
     return (
         <div>
