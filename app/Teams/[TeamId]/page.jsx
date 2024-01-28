@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UserButton, currentUser } from "@clerk/nextjs";
 import Link from "next/link";
-import { set } from "mongoose";
+
 
 export default function Page({ params }) {
+    const [visible, setVisible] = useState(false);
     const [currentUserName, setCurrentUserName] = useState("");
     const [currentUserId, setCurrentUserId] = useState("");
     const [copied, setCopied] = useState(false);
@@ -73,7 +74,9 @@ export default function Page({ params }) {
         }
         console.log("sfsdfjkgnbkgjld");
     }
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    }
     return (
         <div>
             <Nav />
@@ -130,9 +133,19 @@ export default function Page({ params }) {
                                                 </div>
                                             </div>
                                             <div className="flex flex-col gap-3">
-                                                <button className="bg-blue-500 w-full py-2 rounded-md">
+                                                <button className="bg-blue-500 w-full py-2 rounded-md" onClick={(e)=>setVisible(true)} >
                                                     Add New Task?
                                                 </button>
+                                                <div className={`${(visible)?"fixed":"hidden"} border border-black top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#232323] px-8 py-4 rounded-md`}>
+                                                    <div>
+                                                        <h1>Create New Task</h1>
+                                                        <form>
+                                                            <div><input type="text" placeholder="title" /></div>
+                                                            <div><input type="date" placeholder="due date" /></div>
+                                                            <button>Submit</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                                 <Link href={
                                                     `/Users/${currentUserId}`
                                                 } className="w-full bg-[#232323] flex items-center gap-4 py-2 px-2 rounded-md">

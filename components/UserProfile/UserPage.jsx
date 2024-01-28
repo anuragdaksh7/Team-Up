@@ -1,13 +1,45 @@
 "use client"
 
 import axios from "axios";
+import Link from "next/link";
 import { useState } from "react";
 
+const TeamLeadCard = (props) => {
+    return (
+        <div className="flex justify-between select-none bg-[#232323] px-4 py-1 rounded-md">
+            <p className=" capitalize font-semibold">{props.teamName}</p>
+            <p className=" text-green-500">Leader</p>
+        </div>
+    )
+}
+
+const TeamMemberCard = (props) => {
+    return (
+        <div className="flex justify-between select-none bg-[#232323] px-4 py-1 rounded-md">
+            <p className=" capitalize font-semibold">{props.teamName}</p>
+            <p className=" text-orange-500">Member</p>
+        </div>
+    )
+}
+
+function TeamDisplayCard ( props ) {
+    console.log(props.teams,"h");
+    return (
+        <div className="flex flex-col gap-2 py-2">
+            {
+                props.teams.map((val) => {
+                    return (val[1])?<TeamLeadCard teamName={val[0]} />:<TeamMemberCard teamName={val[0]} />
+                })
+            }
+        </div>
+    )
+}
 
 
 export default function UserPage( props ) {
 
     const [visible, setVisible] = useState(false);
+    const [currStatus, setCurrStatus] = useState(props.status);
     const changeActivityStatus = async (status) => {
         console.log(status);
         const response = await axios.post("/api/UserControls/ChangeStatus", {status: status});
@@ -28,7 +60,6 @@ export default function UserPage( props ) {
         "offline" : "#242424",
         "away" : "#c27e00"
     }
-    const [currStatus, setCurrStatus] = useState("active");
     const currColor = colorObj[props.status];
     console.log(currColor);
     return (
@@ -45,9 +76,9 @@ export default function UserPage( props ) {
                         :<></>
                     }
                 </div>
-                <p className="font-light text-sm text-blue-400">{props.email}</p>
+                <Link href={`mailto:${props.email}`} className="font-light text-sm text-blue-400">{props.email}</Link>
             </div>
-            <div className={`${(visible)?"fixed":"hidden"} top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#232323] px-8 py-4 rounded-md`}>
+            <div className={`${(visible)?"fixed":"hidden"} border border-black top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#232323] px-8 py-4 rounded-md`}>
                 <div className="flex justify-between gap-20 items-baseline">
                     <p className=" text-2xl font-bold">Change Status</p>
                     <button onClick={(e)=>setVisible(false)} className=" text-4xl hover:bg-[#323232] rounded-full px-2 flex items-center ">×</button>
@@ -81,6 +112,12 @@ export default function UserPage( props ) {
                     </div>
                 </div>
             </div>
+
+            <div className="py-4">
+                <h1 className="text-lg font-semibold">Teams Joined</h1>
+                <TeamDisplayCard teams = {props.teams}/>
+            </div>
+
         </div>
     )
 }

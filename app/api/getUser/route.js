@@ -28,9 +28,17 @@ export async function POST(request) {
         dataObj.status = individual.status;
         dataObj.teams = [];
         for (let i = 0; i< individual.teams.length; i++) {
-            dataObj.teams.push(individual.teams[i].teamName);
+            const temp = [];
+            temp.push(individual.teams[i].teamName);
+            if (individual.teams[i].leader.toString() == individual._id.toString()) {
+                temp.push(true);
+            } else {
+                temp.push(false);
+            }
+            
+            dataObj.teams.push(temp);
         }
-
+        console.log(dataObj);
         return Response.json({
             success: true,
             user: dataObj

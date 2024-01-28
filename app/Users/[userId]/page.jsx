@@ -14,7 +14,6 @@ export default function Page( {params} ) {
     const [userStatus, setUserStatus] = useState("");
     const [userTeams, setUserTeams] = useState([]);
     const [loaded , setLoaded] = useState(false);
-    const [userInfo, setUser] = useState(Object());
     const getUser = async () => {
         const payload = {
             _id: params.userId
@@ -50,7 +49,7 @@ export default function Page( {params} ) {
                     <UserPage self={userSelf} username={userName} email={userEmail} status={userStatus} teams={userTeams} />
                 </>:
                 <div className="flex justify-center h-[80lvh] items-center">
-                    <p>Loading</p>
+                    <p>Loading...</p>
                 </div>
             }
             
