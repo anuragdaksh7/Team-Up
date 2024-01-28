@@ -36,7 +36,8 @@ export default function ViewTeams() {
     const getTeams = async () => {
         const response = await axios.get("/api/getTeams");
         const data = await response.data;
-        setUserTeams(data);
+        const newData = data.reverse();
+        setUserTeams(newData);
         // console.log(data, userTeams);
     }
     useEffect(() => {

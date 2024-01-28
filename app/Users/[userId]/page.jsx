@@ -48,7 +48,10 @@ export default function Page( {params} ) {
                 (loaded)?<>
                     {/* <p>{params.userId}</p> */}
                     <UserPage self={userSelf} username={userName} email={userEmail} status={userStatus} teams={userTeams} />
-                </>:<p>Loading</p>
+                </>:
+                <div className="flex justify-center h-[80lvh] items-center">
+                    <p>Loading</p>
+                </div>
             }
             
             

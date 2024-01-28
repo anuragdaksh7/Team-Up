@@ -14,11 +14,13 @@ export async function POST( request ){
     }
     const response = new Object();
     response.leader = team.leader.username;
+    response.leadId = team.leader._id;
     response.members = [];
     for (let i = 0; i < team.members.length; i++) {
-        response.members.push(team.members[i].username);
+        response.members.push([team.members[i].username, team.members[i]._id]);
     }
     response.teamName = team.teamName
     response.teamDesc = team.teamDesc
+    // console.log(response);
     return Response.json({team: response});
 }

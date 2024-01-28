@@ -5,6 +5,7 @@ import { FaCopy, FaRegCopy } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UserButton, currentUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function Page({ params }) {
     const [copied, setCopied] = useState(false);
@@ -100,14 +101,16 @@ export default function Page({ params }) {
                                                     {/* <p>Leader -&gt; {team.leader}</p> */}
                                                     <div className="bg-blue-500 ps-2 py-1 rounded-md">
                                                         <p className="underline underline-offset-2 font-bold">Leader</p>
-                                                        <p className="ps-2">{team.leader}</p>
+                                                        <Link href={
+                                                            `/Users/${team.leadId}`
+                                                        } className="ps-2">{team.leader}</Link>
                                                     </div>
                                                     <div className="bg-blue-500 ps-2 py-1 rounded-md ">
                                                         {/* <p>Members -&gt; </p> */}
                                                         <p className="underline underline-offset-2 font-bold">Members</p>
                                                         {
                                                             team?.members?.map((item, index) => {
-                                                                return <p key={index} className="ps-2">{item}</p>
+                                                                return <div><Link href={`/Users/${item[1]}`} key={index} className="ps-2">{item[0]}</Link></div>
                                                             })
                                                         }
                                                     </div>
