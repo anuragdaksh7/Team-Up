@@ -38,13 +38,13 @@ export async function POST(request) {
             
             dataObj.teams.push(temp);
         }
-        console.log(dataObj);
+        // console.log(dataObj);
         return Response.json({
             success: true,
             user: dataObj
         })
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         return Response.json({
             success: false,
             error: "Invalid User Id"

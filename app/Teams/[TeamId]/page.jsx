@@ -21,6 +21,15 @@ export default function Page({ params }) {
     const [permission, setPermission] = useState(false);
     const [team, setTeam] = useState({});
 
+    const fetchTasks = async () => {
+        const payload = {
+            team: params.TeamId
+        }
+        const response = await axios.post("/api/UserControls/FetchTask", payload);
+        const data = await response.data;
+        console.log(data);
+    }
+
     const fetchCurrentUserName = async () => {
         const response = await axios.get("/api/UserControls/GetCurrentUser");
         const data = await response.data;
@@ -40,10 +49,10 @@ export default function Page({ params }) {
 
     const check = async () => {
         const payload = { "teamId": tID };
-        console.log(payload);
+        // console.log(payload);
         const response = await axios.post("/api/validateTeam", payload);
         const data = await response.data;
-        console.log(data)
+        // console.log(data)
         if (!data.success) {
             router.push("/home")
         }
@@ -56,14 +65,17 @@ export default function Page({ params }) {
         check();
         fetchCurrentUserName();
     }, [])
+    useEffect(() => {
+        fetchTasks();
+    },[])
 
     const generateLink = async () => {
         const payload = { "teamId": params.TeamId };
         const response = await axios.post("/api/getLeader", payload);
         const data = await response.data;
-        console.log(data)
+        // console.log(data)
         if (data.success) {
-            console.log("leader");
+            // console.log("leader");
             const payload = { "tId": params.TeamId };
             const response = await axios.post("/api/createLink", payload);
             const data = await response.data;
@@ -74,15 +86,16 @@ export default function Page({ params }) {
         else {
             alert("Only Team Leader can generate invite links!!")
         }
-        console.log("sfsdfjkgnbkgjld");
+        // console.log("sfsdfjkgnbkgjld");
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(task,date);
+        // console.log(task,date);
         const payload = {
             title: task,
             status: false,
-            dueDate: date
+            dueDate: date,
+            team: params.TeamId
         }
         const response = await axios.post("/api/UserControls/CreateTask",payload);
         const data = await response.data;

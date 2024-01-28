@@ -31,6 +31,7 @@ export async function POST(request) {
         title: data.title,
         status: data.status,
         dueDate: data.dueDate,
+        team: data.team,
         createdBy: individual._id
     })
     await newTask.save();

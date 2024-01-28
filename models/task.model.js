@@ -29,6 +29,10 @@ const TaskSchema = new Schema({
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: "Users"
+    },
+    team: {
+        type: Schema.Types.ObjectId,
+        ref: "Teams"
     }
 });
 
