@@ -3,7 +3,6 @@ import { auth, currentUser } from "@clerk/nextjs";
 
 
 export async function POST() {
-    console.log("dsnjk")
     const { userId } = auth();
     const user = await currentUser();
     if (!userId) {

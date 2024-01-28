@@ -1,0 +1,2 @@
+add "request to join button" on the teams display on user profile
+kick individuals

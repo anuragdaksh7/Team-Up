@@ -9,6 +9,8 @@ import Link from "next/link";
 
 
 export default function Page({ params }) {
+    const [task, setTask] = useState("");
+    const [date,setDate] = useState("");
     const [visible, setVisible] = useState(false);
     const [currentUserName, setCurrentUserName] = useState("");
     const [currentUserId, setCurrentUserId] = useState("");
@@ -76,6 +78,7 @@ export default function Page({ params }) {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(task,date);
     }
     return (
         <div>
@@ -138,11 +141,14 @@ export default function Page({ params }) {
                                                 </button>
                                                 <div className={`${(visible)?"fixed":"hidden"} border border-black top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#232323] px-8 py-4 rounded-md`}>
                                                     <div>
-                                                        <h1>Create New Task</h1>
-                                                        <form>
-                                                            <div><input type="text" placeholder="title" /></div>
-                                                            <div><input type="date" placeholder="due date" /></div>
-                                                            <button>Submit</button>
+                                                        <div className="flex justify-between items-baseline">
+                                                            <h1 className="text-xl font-bold">Create New Task</h1>
+                                                            <button onClick={(e)=>setVisible(false)} className=" text-4xl hover:bg-[#323232] rounded-full px-2 flex items-center scale-75 ">×</button>
+                                                        </div>
+                                                        <form className="flex flex-col gap-2 py-2">
+                                                            <div><input className=" outline-none px-2 py-1 font-light rounded-md" type="text" placeholder="title" value={task} onChange={(e)=>setTask(e.target.value)} /></div>
+                                                            <div className="w-full"><input className="w-full outline-none px-2 py-1 font-light rounded-md" type="date" placeholder="due date" value={date}  onChange={(e)=>setDate(e.target.value)} /></div>
+                                                            <button className="w-full bg-blue-500 rounded-md py-1" onClick={handleSubmit}>Submit</button>
                                                         </form>
                                                     </div>
                                                 </div>
