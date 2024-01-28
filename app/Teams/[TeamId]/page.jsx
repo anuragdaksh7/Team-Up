@@ -6,14 +6,26 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UserButton, currentUser } from "@clerk/nextjs";
 import Link from "next/link";
+import { set } from "mongoose";
 
 export default function Page({ params }) {
+    const [currentUserName, setCurrentUserName] = useState("");
+    const [currentUserId, setCurrentUserId] = useState("");
     const [copied, setCopied] = useState(false);
     const router = useRouter();
     const tID = params.TeamId;
     const [code, setCode] = useState("");
     const [permission, setPermission] = useState(false);
     const [team, setTeam] = useState({});
+
+    const fetchCurrentUserName = async () => {
+        const response = await axios.get("/api/UserControls/GetCurrentUser");
+        const data = await response.data;
+        if (data.success) {
+            setCurrentUserName(data.username);
+            setCurrentUserId(data.id);
+        }
+    }
 
     const fetchTeam = async () => {
         const payload = { tId: tID };
@@ -39,6 +51,7 @@ export default function Page({ params }) {
     }
     useEffect(() => {
         check();
+        fetchCurrentUserName();
     }, [])
 
     const generateLink = async () => {
@@ -120,9 +133,12 @@ export default function Page({ params }) {
                                                 <button className="bg-blue-500 w-full py-2 rounded-md">
                                                     Add New Task?
                                                 </button>
-                                                <div className="w-full bg-[#232323] py-2 px-2 rounded-md">
+                                                <Link href={
+                                                    `/Users/${currentUserId}`
+                                                } className="w-full bg-[#232323] flex items-center gap-4 py-2 px-2 rounded-md">
                                                     <UserButton afterSignOutUrl="/" />
-                                                </div>
+                                                    <p>{currentUserName}</p>
+                                                </Link>
                                             </div>
                                         </>
                                     ) : <></>
