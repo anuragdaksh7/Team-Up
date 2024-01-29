@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import DisplayTasksCard from "@/components/Tasks/DisplayTasksCard";
 
 
 export default function Page({ params }) {
@@ -38,7 +39,7 @@ export default function Page({ params }) {
         }
         const fetchedTasks = (data.tasks).sort((a, b) => a.dueDate - b.dueDate);
         setTasksRender(fetchedTasks)
-        // console.log(tasksRender,fetchedTasks,"hi")
+        console.log(fetchedTasks,"hi")
         // console.log(fetchedTasks,typeof(fetchedTasks[0].dueDate));
     }
 
@@ -210,7 +211,12 @@ export default function Page({ params }) {
                                 }
                             </div>
                             <div className="w-full px-4 py-2">
-                                
+                                {
+                                    (tasksRender)?<>
+                                    <h1>Upcoming Tasks</h1>
+                                    <DisplayTasksCard tasks = {tasksRender} />
+                                    </>:<></>
+                                }
                             </div>
                         </div>
 

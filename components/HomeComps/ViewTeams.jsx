@@ -57,7 +57,7 @@ export default function ViewTeams() {
                         return (
                             <TeamButtonComponent id={item._id} name={item.teamName} desc={item.teamDesc} key={index} />
                         )
-                    }):<div></div>
+                    }):<></>
                 }
 
             </div>
