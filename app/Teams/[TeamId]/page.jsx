@@ -1,10 +1,11 @@
 "use client"
 import Nav from "@/components/Nav";
+import React from "react";
 import axios from "axios";
 import { FaCopy, FaRegCopy } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { UserButton, currentUser } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 
@@ -20,6 +21,8 @@ export default function Page({ params }) {
     const [code, setCode] = useState("");
     const [permission, setPermission] = useState(false);
     const [team, setTeam] = useState({});
+    const [tasksRender, setTasksRender] = useState([]);
+
 
     const fetchTasks = async () => {
         const payload = {
@@ -27,7 +30,16 @@ export default function Page({ params }) {
         }
         const response = await axios.post("/api/UserControls/FetchTask", payload);
         const data = await response.data;
-        console.log(data);
+        
+        for (let i = 0; i < data.tasks.length; i++) {
+            const tmp = new Date(data.tasks[i].dueDate);
+            // tasksDateFix.push(fetchedTasks[i].dueDate)
+            data.tasks[i].dueDate = tmp;
+        }
+        const fetchedTasks = (data.tasks).sort((a, b) => a.dueDate - b.dueDate);
+        setTasksRender(fetchedTasks)
+        // console.log(tasksRender,fetchedTasks,"hi")
+        // console.log(fetchedTasks,typeof(fetchedTasks[0].dueDate));
     }
 
     const fetchCurrentUserName = async () => {
@@ -91,6 +103,13 @@ export default function Page({ params }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log(task,date);
+        const dateValid = new Date(date);
+        const temp = new Date();
+        const currDay = new Date(temp.toDateString());
+        if (dateValid<currDay) {
+            alert("Date cannot be in the past");
+            return;
+        }
         const payload = {
             title: task,
             status: false,
@@ -104,6 +123,7 @@ export default function Page({ params }) {
             setVisible(false);
             setTask("");
             setDate("");
+            fetchTasks();
         }
     }
     return (
@@ -188,6 +208,9 @@ export default function Page({ params }) {
                                         </>
                                     ) : <></>
                                 }
+                            </div>
+                            <div className="w-full px-4 py-2">
+                                
                             </div>
                         </div>
 
