@@ -210,12 +210,12 @@ export default function Page({ params }) {
                                     ) : <></>
                                 }
                             </div>
-                            <div className="w-full px-4 py-2">
+                            <div className="w-full px-4 overflow-y-scroll h-[85lvh]">
                                 {
-                                    (tasksRender)?<>
-                                    <h1>Upcoming Tasks</h1>
+                                    (tasksRender)?<div className=" max-h-[85lvh]">
+                                    <h1 className="mb-2 font-bold text-lg">Upcoming Tasks</h1>
                                     <DisplayTasksCard tasks = {tasksRender} />
-                                    </>:<></>
+                                    </div>:<></>
                                 }
                             </div>
                         </div>

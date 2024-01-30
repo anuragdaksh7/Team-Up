@@ -19,15 +19,10 @@ function normalizeDate(days) {
     } return 2;
 }
 
-export default function TaskCard(props) {
+export default function TaskCard2(props) {
     console.log("task", props);
 
-    const colors = {
-        0: "red-500",
-        1: "yellow-400",
-        2: "green-500",
-        3: "blue-500"
-    }
+    
     const temp = new Date();
     const currDay = new Date(temp.toDateString());
     const givenDay = new Date(props.due);
@@ -35,19 +30,19 @@ export default function TaskCard(props) {
     
     return (
         <div className={
-            `font-mono rounded-md px-4 py-2 bg-${(props.status=="true")?colors[3]:colors[normalizeDate(diff)]}`
+            `font-mono text-black rounded-md px-4 py-2 bg-gray-200`
         }>
             <div className=" flex justify-between">
                 <h1>{props.title}</h1>
                 <div className="flex gap-2">
                     {(props.status=="true")?<p>Done</p>:<></>}
-                    {(props.status=="false")?<button>Mark Done</button>:<></>}
+                    {(props.status=="false")?<button className="">Mark Done</button>:<></>}
                     <button><MdDeleteOutline /></button>
                 </div>
             </div>
-            <div className=" flex justify-between">
-                {(props.status=="true")?<></>:<p>Due {props.due.toLocaleDateString()}</p>}
-                <Link href={"/Users/"+props.creatorId}>Created by {props.createdBy}</Link>
+            <div className={" flex justify-between"}>
+                {(props.status=="true")?<></>:<p>Due {props.due.toLocaleDateString()} ({diff} days Left)</p>}
+                <p>Created By <Link href={"/Users/"+props.creatorId}>{props.createdBy}</Link></p>
             </div>
         </div>
     )

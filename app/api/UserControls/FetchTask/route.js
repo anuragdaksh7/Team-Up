@@ -17,7 +17,7 @@ export async function POST (request) {
     const tasks = await Tasks.find({
         team: data.team
     }).populate({path: "createdBy"})
-    console.log(tasks, data)
+    // console.log(tasks, data)
     return Response.json(
         {
             success: true,
