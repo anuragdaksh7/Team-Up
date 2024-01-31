@@ -92,9 +92,10 @@ export default function Page({ params }) {
             const payload = { "tId": params.TeamId };
             const response = await axios.post("/api/createLink", payload);
             const data = await response.data;
-            // navigator.clipboard.writeText(data.link);
-            setCode(data.link);
-            // alert("Code Copied to clipboard");
+            const link = await data.link;
+            navigator.clipboard.writeText(link);
+            // setCode(data.link);
+            alert("Code Copied to clipboard");
         }
         else {
             alert("Only Team Leader can generate invite links!!")

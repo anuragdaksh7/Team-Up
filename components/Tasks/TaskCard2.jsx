@@ -13,7 +13,7 @@ function calculateDaysBetweenDates(date1, date2) {
 }
 
 function normalizeDate(days) {
-    if (days <= 0) {
+    if (days <= 10) {
         return 0;
     } else if (days <= 30) {
         return 1;
@@ -32,7 +32,6 @@ export default function TaskCard2(props) {
 
     const [status, setStatus] = useState(props.status)
     const [del, setDel] = useState((props.deletedBy)?true:false)
-    const [delUser, setDelUser] = useState(props.deletedBy?.username);
 
     const temp = new Date();
     const currDay = new Date(temp.toDateString());
@@ -68,7 +67,7 @@ export default function TaskCard2(props) {
 
     return (
         <div className={
-            ` select-none font-mono text-black rounded-md px-4 py-2 bg-gray-200`
+            ` select-none font-mono text-black rounded-md px-4 py-2 bg-gray-200 hover:bg-white duration-150`
         }>
             <div className=" flex justify-between">
                 <h1 className={
