@@ -1,5 +1,4 @@
 import { Tasks } from "@/models/task.model";
-import { Teams } from "@/models/team.model";
 import { auth } from "@clerk/nextjs";
 
 
@@ -16,7 +15,7 @@ export async function POST (request) {
     }
     const tasks = await Tasks.find({
         team: data.team
-    }).populate({path: "createdBy"})
+    }).populate({path: "createdBy"}).populate({path: "deletedBy"})
     // console.log(tasks, data)
     return Response.json(
         {

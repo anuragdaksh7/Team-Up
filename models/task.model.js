@@ -30,6 +30,10 @@ const TaskSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Users"
     },
+    deletedBy: {
+        type: Schema.Types.ObjectId,
+        ref: "Users"
+    },
     team: {
         type: Schema.Types.ObjectId,
         ref: "Teams"

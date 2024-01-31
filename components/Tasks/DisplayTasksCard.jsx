@@ -17,9 +17,12 @@ export default function DisplayTasksCard(props) {
                         (val) => {
                             return <TaskCard2
                                 key={val._id}
+                                idd={val._id}
                                 status={val.status}
                                 title={val.title}
                                 createdBy={val.createdBy.username}
+                                deletedBy={val.deletedBy?.username}
+                                deleterId={val.deletedBy?._id}
                                 creatorId={val.createdBy._id}
                                 due={val.dueDate} />
                         }

@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider >
       <html lang="en">
-        <link rel="shortcut icon" href="assets/images/icon.png" />
+        <link rel="shortcut icon" href="./favicon.ico" />
         <body className={
           `${inter.className}`
         }>
