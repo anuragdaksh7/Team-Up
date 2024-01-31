@@ -22,7 +22,7 @@ function normalizeDate(days) {
 
 
 export default function TaskCard2(props) {
-    console.log("task", props);
+    // console.log("task", props);
     const colors = {
         0: "red-500",
         1: "yellow-400",

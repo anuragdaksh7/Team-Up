@@ -8,12 +8,14 @@ import { useEffect, useState } from "react";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import DisplayTasksCard from "@/components/Tasks/DisplayTasksCard";
+import DisplayNotes from "@/components/Notes/DisplayNotes";
 
 
 export default function Page({ params }) {
     const [task, setTask] = useState("");
     const [date,setDate] = useState("");
     const [visible, setVisible] = useState(false);
+    const [visibleNote, setVisibleNote] = useState(false);
     const [currentUserName, setCurrentUserName] = useState("");
     const [currentUserId, setCurrentUserId] = useState("");
     const [copied, setCopied] = useState(false);
@@ -23,6 +25,10 @@ export default function Page({ params }) {
     const [permission, setPermission] = useState(false);
     const [team, setTeam] = useState({});
     const [tasksRender, setTasksRender] = useState([]);
+    const [noteName, setNoteName] = useState("");
+    const [noteContent, setNoteContent] = useState("");
+    const [noteTagString, setNoteTagString] = useState("");
+    const [noteTags, setNoteTags] = useState([]);
 
 
     const fetchTasks = async () => {
@@ -102,6 +108,37 @@ export default function Page({ params }) {
         }
         // console.log("sfsdfjkgnbkgjld");
     }
+
+    const handleNoteSubmit = async (e) => {
+        e.preventDefault();
+        // const tagsArr = noteTagString.split(" ");
+        // for (let i = 0; i < tagsArr.length; i++) {
+        //     if (tagsArr[i]!== "") {
+        //         setNoteTags((prevState) => [...prevState, tagsArr[i]]);
+        //     }
+        // }
+        console.log(noteName, noteContent, noteTagString, noteTags)
+        const payload = {
+            "teamId": params.TeamId,
+            "name": noteName,
+            "content": noteContent,
+            "tags": noteTags
+        }
+        const response = await axios.post("/api/NoteControls/CreateNote", payload);
+        const data = await response.data;
+        
+        setNoteTags([]);
+        setNoteName("");
+        setNoteContent("");
+        setNoteTagString("");
+        if (data.success) {
+            alert("Note Created");
+        }
+        else {
+            alert(data.message);
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log(task,date);
@@ -184,7 +221,36 @@ export default function Page({ params }) {
                                                 </div>
                                             </div>
                                             <div className="flex flex-col gap-3">
-                                                <button className="bg-blue-500 w-full py-2 rounded-md" onClick={(e)=>setVisible(true)} >
+                                                <button className="bg-blue-500 w-full py-2 rounded-md" onClick={
+                                                    (e)=>{
+                                                        setVisible(false);
+                                                        setVisibleNote(true)
+                                                    }
+                                                } >
+                                                    Add New Note?
+                                                </button>
+                                                <div className={`${(visibleNote)?"fixed":"hidden"} border border-black top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#232323] px-8 py-4 rounded-md`}>
+                                                    <div>
+                                                        <div className="flex justify-between items-baseline">
+                                                            <h1 className="text-xl font-bold">Create New Note</h1>
+                                                            <button onClick={(e)=>setVisibleNote(false)} className=" text-4xl hover:bg-[#323232] rounded-full px-2 flex items-center scale-75 ">×</button>
+                                                        </div>
+                                                        <form className="flex flex-col gap-2 py-2">
+                                                            <input value={noteName} onChange={(e)=>setNoteName(e.target.value)} className=" outline-none px-2 py-1 font-light rounded-md" type="text" placeholder="title" />
+                                                            <textarea value={noteContent} onChange={(e)=>setNoteContent(e.target.value)} rows={2} className=" outline-none px-2 py-1 font-extralight rounded-md" type="text" placeholder="content" />
+                                                            <input value={noteTags.join(" ")} onChange={(e)=>setNoteTags(e.target.value.split(" "))} className=" outline-none px-2 py-1 font-light rounded-md" type="text" placeholder="tags seperated by spaces" />
+                                                            <button className="w-full bg-blue-500 rounded-md py-1" onClick={handleNoteSubmit}>Submit</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+
+                                                <button className="bg-blue-500 w-full py-2 rounded-md" onClick={
+                                                    (e)=>{
+                                                        setVisibleNote(false);
+                                                        setVisible(true)
+                                                    }
+                                                } >
                                                     Add New Task?
                                                 </button>
                                                 <div className={`${(visible)?"fixed":"hidden"} border border-black top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#232323] px-8 py-4 rounded-md`}>
@@ -212,6 +278,7 @@ export default function Page({ params }) {
                                 }
                             </div>
                             <div className="w-full px-4 overflow-y-scroll h-[85lvh]">
+                                <DisplayNotes teamId={tID} />
                                 {
                                     (tasksRender)?<div className=" max-h-[85lvh]">
                                     <h1 className="mb-2 font-bold text-lg">Upcoming Tasks</h1>
