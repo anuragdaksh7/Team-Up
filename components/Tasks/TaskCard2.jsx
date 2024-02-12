@@ -6,7 +6,7 @@ import { MdDeleteOutline } from "react-icons/md";
 function calculateDaysBetweenDates(date1, date2) {
     const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
 
-    const timeDifference = Math.abs(date2.getTime() - date1.getTime());
+    const timeDifference = (date2.getTime() - date1.getTime());
     const daysDifference = Math.floor(timeDifference / oneDay);
 
     return daysDifference;
@@ -80,7 +80,7 @@ export default function TaskCard2(props) {
                 </div>
             </div>
             <div className={" flex justify-between"}>
-                {(status == "true") ? <></> : <p>Due {props.due.toLocaleDateString()} ({diff} days Left)</p>}
+                {(status == "true") ? <></> : (diff>=0)?<p>Due {props.due.toLocaleDateString()} ({diff} days Left)</p>:<p className="text-red-600">Due date {props.due.toLocaleDateString()} ({-diff} days ago)</p>}
                 <p>Created By <Link className="underline text-blue-600" href={"/Users/" + props.creatorId}>{props.createdBy}</Link></p>
                 {
                     (del)?<p>Closed By <Link className="underline text-blue-600" href={"/Users/" + props.deleterId}>{props.deletedBy}</Link></p>:<></>

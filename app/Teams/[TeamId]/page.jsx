@@ -214,7 +214,7 @@ export default function Page({ params }) {
                                                         <p className="underline underline-offset-2 font-bold">Members</p>
                                                         {
                                                             team?.members?.map((item, index) => {
-                                                                return <div><Link href={`/Users/${item[1]}`} key={index} className="ps-2">{item[0]}</Link></div>
+                                                                return <div key={index}><Link href={`/Users/${item[1]}`} key={index} className="ps-2">{item[0]}</Link></div>
                                                             })
                                                         }
                                                     </div>
