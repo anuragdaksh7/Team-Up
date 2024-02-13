@@ -45,7 +45,7 @@ export default function Page({ params }) {
         }
         const fetchedTasks = (data.tasks).sort((a, b) => a.dueDate - b.dueDate);
         setTasksRender(fetchedTasks)
-        console.log(fetchedTasks,"hi")
+        // console.log(fetchedTasks,"hi")
         // console.log(fetchedTasks,typeof(fetchedTasks[0].dueDate));
     }
 
@@ -63,7 +63,7 @@ export default function Page({ params }) {
         const response = await axios.post("/api/getTeamName", payload);
         const data = await response.data;
         setTeam(data.team);
-        console.log(data, team);
+        // console.log(data, team);
     }
 
     const check = async () => {
