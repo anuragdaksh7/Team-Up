@@ -1,4 +1,4 @@
-
+import { Toaster } from "@/components/ui/sonner"
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
@@ -22,9 +22,10 @@ export default function RootLayout({ children }) {
           <ThemeProvider
             attribute="class"
             defaultTheme="dark">
-          {children}
+            {children}
+            <Toaster />
           </ThemeProvider>
-          </body>
+        </body>
       </html>
     </ClerkProvider>
   )

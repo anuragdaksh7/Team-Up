@@ -16,6 +16,7 @@ export default function DisplayTasksCard(props) {
                     props.tasks.map(
                         (val) => {
                             return <TaskCard2
+                                fetcher={props.fetcher}
                                 key={val._id}
                                 idd={val._id}
                                 status={val.status}
