@@ -1,7 +1,9 @@
+import connectDB from "@/lib/database/database";
 import { Notes } from "@/models/notes.model";
 import { auth } from "@clerk/nextjs";
 
 export async function POST(request) {
+    await connectDB();
     const data = await request.json(0);
     const {userId} = auth();
     if (!userId) {

@@ -1,8 +1,10 @@
+import connectDB from "@/lib/database/database";
 import { Individual } from "@/models/user.model";
 import { auth } from "@clerk/nextjs";
 
 
 export async function POST(request) {
+    await connectDB();
     const data = await request.json();
     const id = await data._id;
     const {userId} = auth();

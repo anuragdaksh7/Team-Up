@@ -2,10 +2,12 @@ import { Teams } from "@/models/team.model";
 import { Individual } from "@/models/user.model";
 import { Notes } from "@/models/notes.model";
 import { auth } from "@clerk/nextjs";
+import connectDB from "@/lib/database/database";
 
 
 
 export async function POST(request) {
+    await connectDB();
     const data = await request.json();
 
     const {userId} = auth();

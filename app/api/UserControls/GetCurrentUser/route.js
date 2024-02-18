@@ -1,7 +1,9 @@
+import connectDB from "@/lib/database/database";
 import { Individual } from "@/models/user.model";
 import { auth } from "@clerk/nextjs";
 
 export async function GET() {
+    await connectDB();
     const {userId} = auth();
     if (!userId) return Response.json({status: false});
     try {

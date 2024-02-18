@@ -1,6 +1,8 @@
+import connectDB from "@/lib/database/database";
 import { Teams } from "@/models/team.model";
 
 export async function POST(request) {
+    await connectDB();
     const data = await request.json();
     const team = await Teams.findOne({ _id: data.tId});
     console.log(data);

@@ -1,4 +1,5 @@
 "use client"
+import { IoIosRemoveCircleOutline } from "react-icons/io";
 import Nav from "@/components/Nav";
 import React from "react";
 import axios from "axios";
@@ -83,9 +84,11 @@ export default function Page({ params }) {
     useEffect(() => {
         check();
         fetchCurrentUserName();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     useEffect(() => {
         fetchTasks();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const generateLink = async () => {
@@ -132,7 +135,7 @@ export default function Page({ params }) {
         setNoteContent("");
         setNoteTagString("");
         if (data.success) {
-            alert("Note Created");
+            window.location.reload();
         }
         else {
             alert(data.message);
@@ -214,7 +217,10 @@ export default function Page({ params }) {
                                                         <p className="underline underline-offset-2 font-bold">Members</p>
                                                         {
                                                             team?.members?.map((item, index) => {
-                                                                return <div key={index}><Link href={`/Users/${item[1]}`} key={index} className="ps-2">{item[0]}</Link></div>
+                                                                return <div key={index} className="flex justify-between pe-2">
+                                                                    <Link href={`/Users/${item[1]}`} key={index} className="ps-2">{item[0]}</Link>
+                                                                    <IoIosRemoveCircleOutline />
+                                                                </div>
                                                             })
                                                         }
                                                     </div>

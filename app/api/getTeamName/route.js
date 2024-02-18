@@ -1,8 +1,10 @@
+import connectDB from "@/lib/database/database";
 import { Teams } from "@/models/team.model";
 import { auth } from "@clerk/nextjs"
 
 
 export async function POST( request ){
+    await connectDB();
     const { userId } = auth();
     if (!userId) return Response.json({status: false});
     const data = await request.json();

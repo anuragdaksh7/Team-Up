@@ -1,10 +1,12 @@
 import { auth, currentUser } from '@clerk/nextjs';
 import { Individual } from '@/models/user.model';
 import { Teams } from '@/models/team.model';
+import connectDB from '@/lib/database/database';
 
 
 
 export async function POST(request) {
+  await connectDB();
   const data = await request.json();
   const { userId } = auth();
   const user = await currentUser();
