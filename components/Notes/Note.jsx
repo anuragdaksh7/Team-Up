@@ -1,5 +1,6 @@
 import axios from "axios";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { Badge } from "@/components/ui/badge"
 
 
 const Note = (props) => {
@@ -29,7 +30,8 @@ const Note = (props) => {
             <div className='flex flex-wrap gap-1 text-xs'>
                 {
                     (props.tags.length > 0) && props.tags.map((value, idx) => {
-                        return <p key={idx} className=' bg-green-500 px-1 hover:scale-105 duration-200  rounded-md text-gray-800 text-xs'>{value}</p>
+                        // return <p key={idx} className=' bg-green-500 px-1 hover:scale-105 duration-200  rounded-md text-gray-800 text-xs'>{value}</p>
+                        return <Badge key={idx}>{value}</Badge>
                     })
                 }
             </div>
