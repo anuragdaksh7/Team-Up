@@ -26,7 +26,7 @@ function normalizeDate(days) {
 export default function TaskCard2(props) {
     const [elementUpdate, setElementUpdate] = useContext(Context);
     // console.log("task", props);
-    console.log(elementUpdate)
+    // console.log(elementUpdate)
     const colors = {
         0: "red-500",
         1: "yellow-400",
@@ -52,7 +52,9 @@ export default function TaskCard2(props) {
             // status = (status == "true")?"false":"true";
             // window.location.reload();
             // props.fetcher();
-            setElementUpdate(prev => prev + 1)
+            setElementUpdate(prev => prev + 1);
+            setStatus("true");
+            setDel(true)
         } else {
             console.log(data);
         }

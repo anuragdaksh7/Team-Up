@@ -10,6 +10,7 @@ import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import DisplayTasksCard from "@/components/Tasks/DisplayTasksCard";
 import DisplayNotes from "@/components/Notes/DisplayNotes";
+import { toast } from "sonner";
 
 export const Context = React.createContext();
 
@@ -35,6 +36,7 @@ export default function Page({ params }) {
 
 
     const fetchTasks = async () => {
+        // console.log("hahah")
         const payload = {
             team: params.TeamId
         }
@@ -65,7 +67,6 @@ export default function Page({ params }) {
         const payload = { tId: tID };
         const response = await axios.post("/api/getTeamName", payload);
         const data = await response.data;
-        console.log("hoohohoho")
         setTeam(data.team);
         // console.log(data, team);
     }
@@ -107,7 +108,8 @@ export default function Page({ params }) {
             const link = await data.link;
             navigator.clipboard.writeText(link);
             // setCode(data.link);
-            alert("Code Copied to clipboard");
+            // alert("Code Copied to clipboard");
+
         }
         else {
             alert("Only Team Leader can generate invite links!!")
@@ -144,7 +146,6 @@ export default function Page({ params }) {
             alert(data.message);
         }
     }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log(task,date);
@@ -164,12 +165,13 @@ export default function Page({ params }) {
         const response = await axios.post("/api/UserControls/CreateTask", payload);
         const data = await response.data;
         if (data.success) {
-            alert(data.message);
+            // alert(data.message);
             setVisible(false);
             setTask("");
             setDate("");
             fetchTasks();
-        }
+            return true;
+        } return false;
     }
     return (
         <Context.Provider value={[elementUpdate, setElementUpdate]}>
@@ -183,7 +185,15 @@ export default function Page({ params }) {
                                 <div className="flex items-center capitalize font-bold text-2xl select-none">{(team.teamName) ? team.teamName : "Team Name"}</div>
 
                                 <div className="bg-blue-600 rounded-md py-2 flex flex-col gap-2 px-4">
-                                    <button onClick={generateLink} className=" ">
+                                    <button onClick={
+                                        () => {
+                                            generateLink();
+
+                                            toast("Success", {
+                                                description: "Code copied to clipboard",
+                                            })
+                                        }
+                                    } className=" ">
                                         Invite friends
                                     </button>
                                     {
@@ -294,7 +304,17 @@ export default function Page({ params }) {
                                                             <form className="flex flex-col gap-2 py-2">
                                                                 <div><input className=" outline-none px-2 py-1 font-light rounded-md" type="text" placeholder="title" value={task} onChange={(e) => setTask(e.target.value)} /></div>
                                                                 <div className="w-full"><input className="w-full outline-none px-2 py-1 font-light rounded-md" type="date" placeholder="due date" value={date} onChange={(e) => setDate(e.target.value)} /></div>
-                                                                <button className="w-full bg-blue-500 rounded-md py-1" onClick={handleSubmit}>Submit</button>
+                                                                <button className="w-full bg-blue-500 rounded-md py-1" onClick={
+                                                                    async (e) => {
+                                                                        const r = await handleSubmit(e);
+                                                                        console.log(r)
+                                                                        if (r) {
+                                                                            toast("Task Created Successfully", {
+                                                                                description: "status: OK",
+                                                                            })
+                                                                        }
+                                                                    }
+                                                                }>Submit</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -312,7 +332,7 @@ export default function Page({ params }) {
                                 <div className="w-full px-4 overflow-y-scroll h-[85lvh]">
                                     <DisplayNotes teamId={tID} />
                                     {
-                                        (tasksRender) ? <div className=" max-h-[85lvh]">
+                                        (tasksRender) ? <div className=" ">
                                             <h1 className="mb-2 font-bold text-lg">Upcoming Tasks</h1>
                                             <DisplayTasksCard fetcher={fetchTasks} tasks={tasksRender} />
                                         </div> : <></>
