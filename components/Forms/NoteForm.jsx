@@ -61,7 +61,7 @@ const NoteForm = (props) => {
     }
 
     return (
-        <div className=" w-96 rounded-md p-4 px-8">
+        <div className=" w-96 rounded-md p-4 px-8 bg-black/[0.95] backdrop-blur-md shadow-xl shadow-black z-10">
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2" >
                     <FormField

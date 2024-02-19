@@ -15,15 +15,13 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import NoteForm from "@/components/Forms/NoteForm";
 import { CgMinimize } from "react-icons/cg";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import TaskForm from "@/components/Forms/TaskForm";
 
 export const Context = React.createContext();
 
 export default function Page({ params }) {
     const [elementUpdate, setElementUpdate] = useState(10);
-    const [task, setTask] = useState("");
-    const [date, setDate] = useState("");
-    const [visible, setVisible] = useState(false);
-    const [visibleNote, setVisibleNote] = useState(false);
     const [currentUserName, setCurrentUserName] = useState("");
     const [currentUserId, setCurrentUserId] = useState("");
     const [copied, setCopied] = useState(false);
@@ -33,10 +31,6 @@ export default function Page({ params }) {
     const [permission, setPermission] = useState(false);
     const [team, setTeam] = useState({});
     const [tasksRender, setTasksRender] = useState([]);
-    const [noteName, setNoteName] = useState("");
-    const [noteContent, setNoteContent] = useState("");
-    const [noteTagString, setNoteTagString] = useState("");
-    const [noteTags, setNoteTags] = useState([]);
 
 
     const fetchTasks = async () => {
@@ -121,62 +115,7 @@ export default function Page({ params }) {
         // console.log("sfsdfjkgnbkgjld");
     }
 
-    const handleNoteSubmit = async (e) => {
-        e.preventDefault();
-        // const tagsArr = noteTagString.split(" ");
-        // for (let i = 0; i < tagsArr.length; i++) {
-        //     if (tagsArr[i]!== "") {
-        //         setNoteTags((prevState) => [...prevState, tagsArr[i]]);
-        //     }
-        // }
-        console.log(noteName, noteContent, noteTagString, noteTags)
-        const payload = {
-            "teamId": params.TeamId,
-            "name": noteName,
-            "content": noteContent,
-            "tags": noteTags
-        }
-        const response = await axios.post("/api/NoteControls/CreateNote", payload);
-        const data = await response.data;
-
-        setNoteTags([]);
-        setNoteName("");
-        setNoteContent("");
-        setNoteTagString("");
-        if (data.success) {
-            window.location.reload();
-        }
-        else {
-            alert(data.message);
-        }
-    }
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // console.log(task,date);
-        const dateValid = new Date(date);
-        const temp = new Date();
-        const currDay = new Date(temp.toDateString());
-        if (dateValid < currDay) {
-            alert("Date cannot be in the past");
-            return;
-        }
-        const payload = {
-            title: task,
-            status: false,
-            dueDate: date,
-            team: params.TeamId
-        }
-        const response = await axios.post("/api/UserControls/CreateTask", payload);
-        const data = await response.data;
-        if (data.success) {
-            // alert(data.message);
-            setVisible(false);
-            setTask("");
-            setDate("");
-            fetchTasks();
-            return true;
-        } return false;
-    }
+    
     return (
         <Context.Provider value={[elementUpdate, setElementUpdate]}>
             <div>
@@ -188,6 +127,8 @@ export default function Page({ params }) {
                             <div className="flex gap-4">
                                 <div className="flex items-center capitalize font-bold text-2xl select-none">{(team.teamName) ? team.teamName : "Team Name"}</div>
 
+
+                                {/* // generate invite link */}
                                 <div className=" rounded-md py-2 flex flex-col gap-2 px-4">
                                     <Button onClick={
                                         () => {
@@ -212,6 +153,9 @@ export default function Page({ params }) {
                                         </div> : <></>
                                     }
                                 </div>
+
+
+
                             </div>
 
                             <div className="flex">
@@ -244,61 +188,18 @@ export default function Page({ params }) {
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                                 <div className="flex flex-col gap-3">
-                                                    <button className="bg-blue-500 w-full py-2 rounded-md" onClick={
-                                                        (e) => {
-                                                            setVisible(false);
-                                                            setVisibleNote(true)
-                                                        }
-                                                    } >
-                                                        Add New Note?
-                                                    </button>
-                                                    <div className={`${(visibleNote) ? "fixed" : "hidden"} border border-black top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  bg-black/[0.95] backdrop-blur-md rounded-md shadow-lg shadow-black z-10`}>
-                                                        <div>
-                                                            <div className="px-8 pt-2 flex justify-between items-center">
-                                                                <h1 className="text-lg font-semibold">Create a Note</h1>
-                                                                <CgMinimize className=" " onClick={
-                                                                    (e) => {
-                                                                        setVisibleNote(false);
-                                                                    }
-                                                                } />
-                                                            </div>
+                                                    <Popover>
+                                                        <PopoverTrigger className="bg-blue-500 w-full py-2 rounded-md">Add New Note?</PopoverTrigger>
+                                                        <PopoverContent className=" w-fit shadow-lg shadow-black border-2">
                                                             <NoteForm team_id={tID} />
-                                                        </div>
-                                                    </div>
+                                                        </PopoverContent>
+                                                    </Popover>
+                                                    
+                                                    <TaskForm team_id={tID} />
 
-
-                                                    <button className="bg-blue-500 w-full py-2 rounded-md" onClick={
-                                                        (e) => {
-                                                            setVisibleNote(false);
-                                                            setVisible(true)
-                                                        }
-                                                    } >
-                                                        Add New Task?
-                                                    </button>
-                                                    <div className={`${(visible) ? "fixed" : "hidden"} border border-black top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#232323] px-8 py-4 rounded-md`}>
-                                                        <div>
-                                                            <div className="flex justify-between items-baseline">
-                                                                <h1 className="text-xl font-bold">Create New Task</h1>
-                                                                <button onClick={(e) => setVisible(false)} className=" text-4xl hover:bg-[#323232] rounded-full px-2 flex items-center scale-75 ">×</button>
-                                                            </div>
-                                                            <form className="flex flex-col gap-2 py-2">
-                                                                <div><input className=" outline-none px-2 py-1 font-light rounded-md" type="text" placeholder="title" value={task} onChange={(e) => setTask(e.target.value)} /></div>
-                                                                <div className="w-full"><input className="w-full outline-none px-2 py-1 font-light rounded-md" type="date" placeholder="due date" value={date} onChange={(e) => setDate(e.target.value)} /></div>
-                                                                <button className="w-full bg-blue-500 rounded-md py-1" onClick={
-                                                                    async (e) => {
-                                                                        const r = await handleSubmit(e);
-                                                                        console.log(r)
-                                                                        if (r) {
-                                                                            toast("Task Created Successfully", {
-                                                                                description: "status: OK",
-                                                                            })
-                                                                        }
-                                                                    }
-                                                                }>Submit</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
                                                     <Link href={
                                                         `/Users/${currentUserId}`
                                                     } className="w-full bg-[#232323] flex items-center gap-4 py-2 px-2 rounded-md">

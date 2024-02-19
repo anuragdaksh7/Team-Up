@@ -36,6 +36,7 @@ export async function POST(request) {
         team: data.team,
         createdBy: individual._id
     })
+    // console.log(newTask);
     await newTask.save();
     return Response.json(
         {
