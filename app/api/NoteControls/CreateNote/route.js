@@ -39,7 +39,7 @@ export async function POST(request) {
     try {
         // console.log(data);
         const newNote = new Notes({
-            title: data.name,
+            title: data.title,
             content: data.content,
             tags: data.tags,
             createdBy: individual,

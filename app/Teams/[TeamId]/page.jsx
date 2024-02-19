@@ -1,5 +1,6 @@
 "use client"
 import { IoIosRemoveCircleOutline } from "react-icons/io";
+import { FcInvite } from "react-icons/fc";
 import Nav from "@/components/Nav";
 import React from "react";
 import axios from "axios";
@@ -11,6 +12,9 @@ import Link from "next/link";
 import DisplayTasksCard from "@/components/Tasks/DisplayTasksCard";
 import DisplayNotes from "@/components/Notes/DisplayNotes";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import NoteForm from "@/components/Forms/NoteForm";
+import { CgMinimize } from "react-icons/cg";
 
 export const Context = React.createContext();
 
@@ -181,21 +185,21 @@ export default function Page({ params }) {
                     (permission) ? (
                         <div className=" flex flex-col  px-4">
 
-                            <div className="flex justify-between">
+                            <div className="flex gap-4">
                                 <div className="flex items-center capitalize font-bold text-2xl select-none">{(team.teamName) ? team.teamName : "Team Name"}</div>
 
-                                <div className="bg-blue-600 rounded-md py-2 flex flex-col gap-2 px-4">
-                                    <button onClick={
+                                <div className=" rounded-md py-2 flex flex-col gap-2 px-4">
+                                    <Button onClick={
                                         () => {
                                             generateLink();
-
                                             toast("Success", {
                                                 description: "Code copied to clipboard",
                                             })
                                         }
-                                    } className=" ">
-                                        Invite friends
-                                    </button>
+                                    } className=" " variant="outline">
+                                        {/* Invite friends */}
+                                        <FcInvite className=" text-xl" />
+                                    </Button>
                                     {
                                         (code != "") ? <div className="flex justify-between items-center gap-2">
                                             <p className=" flex  bg-blue-600">{code}</p>
@@ -249,40 +253,17 @@ export default function Page({ params }) {
                                                     } >
                                                         Add New Note?
                                                     </button>
-                                                    <div className={`${(visibleNote) ? "fixed" : "hidden"} border border-black top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#232323] px-8 py-4 rounded-md`}>
+                                                    <div className={`${(visibleNote) ? "fixed" : "hidden"} border border-black top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  bg-black/[0.95] backdrop-blur-md rounded-md shadow-lg shadow-black z-10`}>
                                                         <div>
-                                                            <div className="flex justify-between items-baseline">
-                                                                <h1 className="text-xl font-bold">Create New Note</h1>
-                                                                <button onClick={(e) => setVisibleNote(false)} className=" text-4xl hover:bg-[#323232] rounded-full px-2 flex items-center scale-75 ">×</button>
+                                                            <div className="px-8 pt-2 flex justify-between items-center">
+                                                                <h1 className="text-lg font-semibold">Create a Note</h1>
+                                                                <CgMinimize className=" " onClick={
+                                                                    (e) => {
+                                                                        setVisibleNote(false);
+                                                                    }
+                                                                } />
                                                             </div>
-                                                            <form className="flex flex-col gap-2 py-2">
-                                                                <input
-                                                                    value={noteName}
-                                                                    onChange={(e) => setNoteName(e.target.value)}
-                                                                    className=" outline-none px-2 py-1 font-light rounded-md"
-                                                                    type="text"
-                                                                    placeholder="title"
-                                                                />
-                                                                <textarea
-                                                                    value={noteContent}
-                                                                    onChange={(e) => setNoteContent(e.target.value)}
-                                                                    rows={2}
-                                                                    className=" outline-none px-2 py-1 font-extralight rounded-md"
-                                                                    type="text"
-                                                                    placeholder="content"
-                                                                />
-                                                                <input
-                                                                    value={noteTags.join(" ")}
-                                                                    onChange={(e) => setNoteTags(e.target.value.split(" "))}
-                                                                    className=" outline-none px-2 py-1 font-light rounded-md"
-                                                                    type="text"
-                                                                    placeholder="tags seperated by spaces"
-                                                                />
-                                                                <button
-                                                                    className="w-full bg-blue-500 rounded-md py-1"
-                                                                    onClick={handleNoteSubmit}
-                                                                >Submit</button>
-                                                            </form>
+                                                            <NoteForm team_id={tID} />
                                                         </div>
                                                     </div>
 
