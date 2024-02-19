@@ -4,17 +4,20 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
+import { Context } from "@/app/Teams/[TeamId]/page";
 
 
 
 
 const NoteForm = (props) => {
 
+    const [elementUpdate, setElementUpdate] = useContext(Context);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [tags, setTags] = useState("");
@@ -45,6 +48,7 @@ const NoteForm = (props) => {
         const response = await axios.post("/api/NoteControls/CreateNote", payload);
         const data = await response.data;
         if (data.success) {
+            setElementUpdate(prev => prev + 1);
             setTitle("")
             setContent("")
             setTags("")
@@ -60,71 +64,78 @@ const NoteForm = (props) => {
         handleSubmit(values);
     }
 
+
+
     return (
-        <div className=" w-96 rounded-md p-4 px-8 bg-black/[0.95] backdrop-blur-md shadow-xl shadow-black z-10">
-            <Form {...form} >
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2" >
-                    <FormField
-                        control={form.control}
-                        name="title"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Title</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="text"
-                                        value={title}
-                                        onChange={(e) => setTitle(e.target.value)}
-                                        placeholder="title"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="content"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Content</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="text"
-                                        value={content}
-                                        onChange={(e) => setContent(e.target.value)}
-                                        placeholder="Content"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="tags"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Tags</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="text"
-                                        value={tags}
-                                        onChange={(e) => setTags(e.target.value)}
-                                        placeholder="tags"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <Button type="submit" className="w-full mt-3">Submit</Button>
-                </form>
-            </Form>
-        </div>
+        <Popover>
+            <PopoverTrigger className="bg-blue-500 w-full py-2 rounded-md">Add New Note?</PopoverTrigger>
+            <PopoverContent className=" w-fit shadow-lg shadow-black border-2">
+                <div className=" w-96 rounded-md p-4 px-8 bg-black/[0.95] backdrop-blur-md shadow-xl shadow-black z-10">
+                    <Form {...form} >
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2" >
+                            <FormField
+                                control={form.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Title</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="text"
+                                                value={title}
+                                                onChange={(e) => setTitle(e.target.value)}
+                                                placeholder="title"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="content"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Content</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="text"
+                                                value={content}
+                                                onChange={(e) => setContent(e.target.value)}
+                                                placeholder="Content"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="tags"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Tags</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="text"
+                                                value={tags}
+                                                onChange={(e) => setTags(e.target.value)}
+                                                placeholder="tags"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" className="w-full mt-3">Submit</Button>
+                        </form>
+                    </Form>
+                </div>
+            </PopoverContent>
+        </Popover >
     )
 }
 

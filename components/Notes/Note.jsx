@@ -1,16 +1,19 @@
 import axios from "axios";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Badge } from "@/components/ui/badge"
+import { useContext } from "react";
+import { Context } from "@/app/Teams/[TeamId]/page";
 
 
 const Note = (props) => {
     // console.log(props)
+    const [elementUpdate, setElementUpdate] = useContext(Context);
     const handleDelete = async () => {
         const payload = {_id: props._id};
         const response = await axios.post("/api/NoteControls/DeleteNote", payload);
         const data = await response.data;
         if (data.success) {
-            window.location.reload();
+            setElementUpdate(prev => prev+1)
         } else {
             alert(data.message);
         }
@@ -18,6 +21,7 @@ const Note = (props) => {
     }
     return (
         <div className='text-black select-none border-[1px] h-fit min-w-40 bg-gray-100 hover:bg-white duration-200 hover:scale-105 rounded-md px-2 py-1 pb-2'>
+            <p className="hidden">{elementUpdate}</p>
             <div className=' flex justify-between mb-0'>
                 <p className=' font-semibold '>{props.title}</p>
                 {

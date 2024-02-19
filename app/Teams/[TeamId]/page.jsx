@@ -14,15 +14,12 @@ import DisplayNotes from "@/components/Notes/DisplayNotes";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import NoteForm from "@/components/Forms/NoteForm";
-import { CgMinimize } from "react-icons/cg";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import TaskForm from "@/components/Forms/TaskForm";
 
 export const Context = React.createContext();
 
 export default function Page({ params }) {
     const [elementUpdate, setElementUpdate] = useState(10);
-    const [currentUserName, setCurrentUserName] = useState("");
     const [currentUserId, setCurrentUserId] = useState("");
     const [copied, setCopied] = useState(false);
     const router = useRouter();
@@ -34,7 +31,6 @@ export default function Page({ params }) {
 
 
     const fetchTasks = async () => {
-        // console.log("hahah")
         const payload = {
             team: params.TeamId
         }
@@ -43,23 +39,12 @@ export default function Page({ params }) {
 
         for (let i = 0; i < data.tasks.length; i++) {
             const tmp = new Date(data.tasks[i].dueDate);
-            // tasksDateFix.push(fetchedTasks[i].dueDate)
             data.tasks[i].dueDate = tmp;
         }
         const fetchedTasks = (data.tasks).sort((a, b) => a.dueDate - b.dueDate);
         setTasksRender(fetchedTasks)
-        // console.log(fetchedTasks,"hi")
-        // console.log(fetchedTasks,typeof(fetchedTasks[0].dueDate));
     }
 
-    const fetchCurrentUserName = async () => {
-        const response = await axios.get("/api/UserControls/GetCurrentUser");
-        const data = await response.data;
-        if (data.success) {
-            setCurrentUserName(data.username);
-            setCurrentUserId(data.id);
-        }
-    }
 
     const fetchTeam = async () => {
         const payload = { tId: tID };
@@ -85,7 +70,6 @@ export default function Page({ params }) {
     }
     useEffect(() => {
         check();
-        fetchCurrentUserName();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [elementUpdate])
     useEffect(() => {
@@ -115,10 +99,10 @@ export default function Page({ params }) {
         // console.log("sfsdfjkgnbkgjld");
     }
 
-    
+
     return (
         <Context.Provider value={[elementUpdate, setElementUpdate]}>
-            <div>
+            <div className=" overflow-y-hidden ">
                 <Nav />
                 {
                     (permission) ? (
@@ -129,7 +113,7 @@ export default function Page({ params }) {
 
 
                                 {/* // generate invite link */}
-                                <div className=" rounded-md py-2 flex flex-col gap-2 px-4">
+                                <div className=" rounded-md flex flex-col gap-2 px-4">
                                     <Button onClick={
                                         () => {
                                             generateLink();
@@ -159,7 +143,7 @@ export default function Page({ params }) {
                             </div>
 
                             <div className="flex">
-                                <div className="h-[85lvh] w-1/5 flex flex-col px-6 border-r-2 py-2 justify-between ">
+                                <div className="h-[85lvh] w-1/5 flex flex-col px-6 border-r-2 py- justify-between ">
                                     {
                                         (team != {}) ? (
                                             <>
@@ -190,21 +174,17 @@ export default function Page({ params }) {
                                                 </div>
 
 
-                                                <div className="flex flex-col gap-3">
-                                                    <Popover>
-                                                        <PopoverTrigger className="bg-blue-500 w-full py-2 rounded-md">Add New Note?</PopoverTrigger>
-                                                        <PopoverContent className=" w-fit shadow-lg shadow-black border-2">
-                                                            <NoteForm team_id={tID} />
-                                                        </PopoverContent>
-                                                    </Popover>
-                                                    
+                                                <div className="flex flex-col gap-2">
+
+                                                    <NoteForm team_id={tID} />
+
                                                     <TaskForm team_id={tID} />
 
                                                     <Link href={
                                                         `/Users/${currentUserId}`
-                                                    } className="w-full bg-[#232323] flex items-center gap-4 py-2 px-2 rounded-md">
-                                                        <UserButton afterSignOutUrl="/" />
-                                                        <p>{currentUserName}</p>
+                                                    } className="w-full bg-white gap-4 py-2 px-2 flex justify-center rounded-md">
+                                                        <UserButton className="" 
+                                                            showName="true" />
                                                     </Link>
                                                 </div>
                                             </>

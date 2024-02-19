@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { Context } from "@/app/Teams/[TeamId]/page";
 import { toast } from "sonner"
+import { Separator } from "../ui/separator";
 
 function calculateDaysBetweenDates(date1, date2) {
     const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
@@ -78,6 +79,7 @@ export default function TaskCard2(props) {
         <div className={
             ` select-none font-mono text-black rounded-md px-4 py-2 bg-gray-200 hover:bg-white duration-150`
         }>
+            <p className="hidden">{elementUpdate}</p>
             <div className=" flex justify-between">
                 <h1 className={
                     ` capitalize px-1 rounded-md font-semibold bg-${(status == "true") ? colors[3] : colors[normalizeDate(diff)]}`
@@ -85,6 +87,7 @@ export default function TaskCard2(props) {
                 <div className="flex gap-2 ">
                     {(status == "true") ? <p>Done</p> : <></>}
                     {(status == "false") ? <button onClick={markDone}>Mark Done</button> : <></>}
+                    <Separator orientation="vertical" />
                     <button onClick={
                         () => {
                             deleteTask();

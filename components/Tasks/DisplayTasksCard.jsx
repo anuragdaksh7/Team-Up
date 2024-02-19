@@ -1,11 +1,15 @@
 import TaskCard2 from "./TaskCard2"
 import TaskCard from "./TaskCard"
+import { useContext } from "react";
+import { Context } from "@/app/Teams/[TeamId]/page";
 
 
 export default function DisplayTasksCard(props) {
+    const [elementUpdate, setElementUpdate] = useContext(Context);
     // console.log("tasks",props)
     return (
         <div className="" >
+        <p className="hidden">{elementUpdate}</p>
             <div className="bg-green-500"></div>
             <div className="bg-yellow-400"></div>
             <div className="bg-red-500"></div>
