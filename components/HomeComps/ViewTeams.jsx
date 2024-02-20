@@ -34,7 +34,7 @@ export default function ViewTeams() {
     ]
     const [userTeams, setUserTeams] = useState(Array());
     const getTeams = async () => {
-        const response = await axios.get("/api/getTeams");
+        const response = await axios.get("/api/v1/getTeams");
         const data = await response.data;
         const newData = data.reverse();
         setUserTeams(newData);

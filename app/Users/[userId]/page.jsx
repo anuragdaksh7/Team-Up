@@ -18,7 +18,7 @@ export default function Page( {params} ) {
         const payload = {
             _id: params.userId
         }
-        const response = await axios.post("/api/getUser", payload);
+        const response = await axios.post("/api/v1/getUser", payload);
         const data = await response.data;
         if (!data.success) {
             alert(data.error);

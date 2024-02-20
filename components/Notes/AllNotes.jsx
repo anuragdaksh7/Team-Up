@@ -11,7 +11,7 @@ export default function AllNotes( props ) {
 
     const fetchNotes = async () => {
         const payload = {team: tId};
-        const response = await axios.post("/api/NoteControls/FetchNotes",payload);
+        const response = await axios.post("/api/v1/NoteControls/FetchNotes",payload);
         const data = await response.data;
         // console.log(data.notes);
         setNotes(data.notes);

@@ -18,7 +18,7 @@ export default function CreateTeamForm(props) {
             teamDesc: teamDescription
         }
 
-        const response = await axios.post("/api/createTeam", payload);
+        const response = await axios.post("/api/v1/createTeam", payload);
         const data = await response.data;
         if (data.success) {
             router.push("/home")

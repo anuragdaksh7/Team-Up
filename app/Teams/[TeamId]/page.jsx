@@ -15,6 +15,9 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import NoteForm from "@/components/Forms/NoteForm";
 import TaskForm from "@/components/Forms/TaskForm";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
 
 export const Context = React.createContext();
 
@@ -34,7 +37,7 @@ export default function Page({ params }) {
         const payload = {
             team: params.TeamId
         }
-        const response = await axios.post("/api/UserControls/FetchTask", payload);
+        const response = await axios.post("/api/v1/UserControls/FetchTask", payload);
         const data = await response.data;
 
         for (let i = 0; i < data.tasks.length; i++) {
@@ -48,7 +51,7 @@ export default function Page({ params }) {
 
     const fetchTeam = async () => {
         const payload = { tId: tID };
-        const response = await axios.post("/api/getTeamName", payload);
+        const response = await axios.post("/api/v1/getTeamName", payload);
         const data = await response.data;
         setTeam(data.team);
         // console.log(data, team);
@@ -57,7 +60,7 @@ export default function Page({ params }) {
     const check = async () => {
         const payload = { "teamId": tID };
         // console.log(payload);
-        const response = await axios.post("/api/validateTeam", payload);
+        const response = await axios.post("/api/v1/validateTeam", payload);
         const data = await response.data;
         // console.log(data)
         if (!data.success) {
@@ -79,13 +82,13 @@ export default function Page({ params }) {
 
     const generateLink = async () => {
         const payload = { "teamId": params.TeamId };
-        const response = await axios.post("/api/getLeader", payload);
+        const response = await axios.post("/api/v1/getLeader", payload);
         const data = await response.data;
         // console.log(data)
         if (data.success) {
             // console.log("leader");
             const payload = { "tId": params.TeamId };
-            const response = await axios.post("/api/createLink", payload);
+            const response = await axios.post("/api/v1/createLink", payload);
             const data = await response.data;
             const link = await data.link;
             navigator.clipboard.writeText(link);
@@ -143,34 +146,44 @@ export default function Page({ params }) {
                             </div>
 
                             <div className="flex">
-                                <div className="h-[85lvh] w-1/5 flex flex-col px-6 border-r-2 py- justify-between ">
+                                <div className="h-[85lvh] w-1/5 flex flex-col px-6 border-r-2 pt-4 justify-between ">
                                     {
                                         (team != {}) ? (
                                             <>
                                                 <div>
-                                                    {/* <p>Description -&gt; {team.teamDesc}</p> */}
-                                                    <h1 className="text-xl font-semibold text-blue-500 mb-2">Members</h1>
-                                                    <div className="bg-blue-400 px-4 py-3 rounded-md flex flex-col gap-3">
-                                                        {/* <p>Leader -&gt; {team.leader}</p> */}
-                                                        <div className="bg-blue-500 ps-2 py-1 rounded-md">
-                                                            <p className="underline underline-offset-2 font-bold">Leader</p>
-                                                            <Link href={
-                                                                `/Users/${team.leadId}`
-                                                            } className="ps-2">{team.leader}</Link>
-                                                        </div>
-                                                        <div className="bg-blue-500 ps-2 py-1 rounded-md ">
-                                                            {/* <p>Members -&gt; </p> */}
-                                                            <p className="underline underline-offset-2 font-bold">Members</p>
-                                                            {
-                                                                team?.members?.map((item, index) => {
-                                                                    return <div key={index} className="flex justify-between pe-2">
-                                                                        <Link href={`/Users/${item[1]}`} key={index} className="ps-2">{item[0]}</Link>
-                                                                        <IoIosRemoveCircleOutline />
-                                                                    </div>
-                                                                })
-                                                            }
-                                                        </div>
-                                                    </div>
+
+                                                    <Card>
+                                                        <CardHeader>
+                                                            <CardTitle>Members</CardTitle>
+                                                            {/* <CardDescription>All Members.</CardDescription> */}
+                                                        </CardHeader>
+                                                        <CardContent>
+                                                            <div>
+                                                                {
+                                                                    team?.members?.map((item, idx) => {
+                                                                        return <div>
+                                                                            <Button variant="link">
+                                                                                {
+                                                                                    (item[1].toString() == team.leadId.toString()) ? (
+                                                                                        <>
+                                                                                            <Link href={`/Users/${item[1]}`} key={idx} className=" text-red-500 ps-2">
+                                                                                                {item[0]}
+                                                                                            </Link>
+                                                                                        </>
+                                                                                    ):
+                                                                                    <Link href={`/Users/${item[1]}`} key={idx} className=" ps-2">
+                                                                                        {item[0]}
+                                                                                    </Link>
+                                                                                }
+                                                                            </Button>
+                                                                        </div>
+                                                                    })
+                                                                }
+                                                            </div>
+                                                        </CardContent>
+                                                    </Card>
+
+                                                    
                                                 </div>
 
 
@@ -183,7 +196,7 @@ export default function Page({ params }) {
                                                     <Link href={
                                                         `/Users/${currentUserId}`
                                                     } className="w-full bg-white gap-4 py-2 px-2 flex justify-center rounded-md">
-                                                        <UserButton className="" 
+                                                        <UserButton className=""
                                                             showName="true" />
                                                     </Link>
                                                 </div>
@@ -208,6 +221,6 @@ export default function Page({ params }) {
                     </div>
                 }
             </div>
-        </Context.Provider>
+        </Context.Provider >
     )
 }

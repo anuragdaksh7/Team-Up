@@ -47,7 +47,7 @@ export default function TaskCard2(props) {
         const payload = {
             _id: props.idd
         }
-        const response = await axios.post("/api/TaskControls/ModifyTask", payload);
+        const response = await axios.post("/api/v1/TaskControls/ModifyTask", payload);
         const data = await response.data;
         if (data.success) {
             // status = (status == "true")?"false":"true";
@@ -65,7 +65,7 @@ export default function TaskCard2(props) {
         const payload = {
             _id: props.idd
         }
-        const response = await axios.post("/api/TaskControls/DeleteTask", payload);
+        const response = await axios.post("/api/v1/TaskControls/DeleteTask", payload);
         const data = await response.data;
         if (data.success) {
             // window.location.reload();

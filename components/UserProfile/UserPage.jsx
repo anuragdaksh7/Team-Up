@@ -42,7 +42,7 @@ export default function UserPage( props ) {
     const [currStatus, setCurrStatus] = useState(props.status);
     const changeActivityStatus = async (status) => {
         console.log(status);
-        const response = await axios.post("/api/UserControls/ChangeStatus", {status: status});
+        const response = await axios.post("/api/v1/UserControls/ChangeStatus", {status: status});
         const data = await response.data;
         if (data.success) {
             alert("Status Changed!");

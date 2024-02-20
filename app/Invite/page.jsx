@@ -14,7 +14,7 @@ export default function Page() {
     const join = async (e) => {
         e.preventDefault();
         const payload = { invite: code };
-        const response = await axios.post("/api/joinTeam", payload);
+        const response = await axios.post("/api/v1/joinTeam", payload);
         const data = await response.data;
         console.log("data",data)
         setJoined(data.status);

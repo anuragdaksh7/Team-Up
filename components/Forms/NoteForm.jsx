@@ -45,7 +45,7 @@ const NoteForm = (props) => {
             tags: values.tags.split(" "),
         }
         console.log(payload)
-        const response = await axios.post("/api/NoteControls/CreateNote", payload);
+        const response = await axios.post("/api/v1/NoteControls/CreateNote", payload);
         const data = await response.data;
         if (data.success) {
             setElementUpdate(prev => prev + 1);

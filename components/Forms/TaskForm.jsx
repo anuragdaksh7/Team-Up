@@ -7,16 +7,18 @@ import { z } from "zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { Calendar } from "../ui/calendar"
 import { CalendarIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
+import { Context } from "@/app/Teams/[TeamId]/page";
 
 
 const TaskForm = (props) => {
+    const [elementUpdate, setElementUpdate] = useContext(Context);
     const [title, setTitle] = useState("");
     const [date, setDate] = useState(new Date());
 
@@ -44,13 +46,14 @@ const TaskForm = (props) => {
             dueDate: subDate,
             team: props.team_id
         }
-        const response = await axios.post("/api/UserControls/CreateTask", payload);
+        const response = await axios.post("/api/v1/UserControls/CreateTask", payload);
         const data = await response.data;
         if (data.success) {
 
             toast("Task Created Successfully", {
                 description: "status: OK",
-            })
+            });
+            setElementUpdate(prev => prev + 1);
             return true;
 
         } return false;

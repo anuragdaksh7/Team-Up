@@ -8,7 +8,7 @@ export default function Page( {params} ) {
     const [joined, setJoined] = useState(false);
     const join = async () => {
         const payload = { invite : params.code };
-        const response = await axios.post("/api/joinTeam", payload);
+        const response = await axios.post("/api/v1/joinTeam", payload);
         const data = await response.data;
         setJoined(data.success);
         console.log(data);

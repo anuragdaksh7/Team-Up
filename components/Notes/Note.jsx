@@ -10,7 +10,7 @@ const Note = (props) => {
     const [elementUpdate, setElementUpdate] = useContext(Context);
     const handleDelete = async () => {
         const payload = {_id: props._id};
-        const response = await axios.post("/api/NoteControls/DeleteNote", payload);
+        const response = await axios.post("/api/v1/NoteControls/DeleteNote", payload);
         const data = await response.data;
         if (data.success) {
             setElementUpdate(prev => prev+1)
