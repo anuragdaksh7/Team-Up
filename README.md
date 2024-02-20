@@ -6,6 +6,8 @@
 
 
 ![image](https://github.com/anuragdaksh7/Team-Up/assets/84393491/cd09e928-a8c9-493e-a6ad-1e62ff58d9ed)
+![image](https://github.com/anuragdaksh7/Team-Up/assets/84393491/8c5e2931-260e-4cc7-966d-b63c7f57becc)
+
 
 
 ## Installation
