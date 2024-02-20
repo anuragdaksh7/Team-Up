@@ -19,7 +19,7 @@ export async function POST( request ){
     response.leadId = team.leader._id;
     response.members = [];
     for (let i = 0; i < team.members.length; i++) {
-        response.members.push([team.members[i].username, team.members[i]._id]);
+        response.members.push([team.members[i].username, team.members[i]._id, team.members[i].email]);
     }
     response.teamName = team.teamName
     response.teamDesc = team.teamDesc
