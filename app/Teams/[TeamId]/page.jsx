@@ -95,6 +95,7 @@ export default function Page({ params }) {
       const response = await axios.post("/api/v1/createLink", payload);
       const data = await response.data;
       const link = await data.link;
+      console.log(link)
       navigator.clipboard.writeText(link);
     }
     else {
@@ -116,15 +117,15 @@ export default function Page({ params }) {
 
                 {/* // generate invite link */}
                 <div className=" rounded-md flex flex-col gap-2 px-4">
-                  <Button onClick={
+                  <Button className=" " variant="outline">
+                    <FcInvite  onClick={
                     () => {
                       generateLink();
                       toast("Success", {
                         description: "Code copied to clipboard",
                       })
                     }
-                  } className=" " variant="outline">
-                    <FcInvite className=" text-xl" />
+                  }  className=" text-xl" />
                   </Button>
                   {
                     (code != "") ? <div className="flex justify-between items-center gap-2">

@@ -21,7 +21,8 @@ export async function POST(request) {
         return Response.json({status: false});
     }
     for (let i = 0; i< individual.teams.length; i++) {
-        if (individual.teams[i] == team._id) {
+        
+        if (individual.teams[i].toString() === team._id.toString()) {
             return Response.json({status: false});
         }
     }
