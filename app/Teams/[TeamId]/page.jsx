@@ -96,6 +96,7 @@ export default function Page({ params }) {
       const data = await response.data;
       const link = await data.link;
       console.log(link)
+      setCode(link)
       navigator.clipboard.writeText(link);
     }
     else {
@@ -122,22 +123,12 @@ export default function Page({ params }) {
                     () => {
                       generateLink();
                       toast("Success", {
-                        description: "Code copied to clipboard",
+                        description: `Code copied to clipboard ${code}`,
                       })
                     }
                   }  className=" text-xl" />
                   </Button>
-                  {
-                    (code != "") ? <div className="flex justify-between items-center gap-2">
-                      <p className=" flex  bg-blue-600">{code}</p>
-                      {
-                        (!copied) ? <FaRegCopy className=" cursor-pointer" onClick={(e) => {
-                          setCopied(true);
-                          navigator.clipboard.writeText(code);
-                        }} /> : <FaCopy className=" cursor-pointer" />
-                      }
-                    </div> : <></>
-                  }
+                  
                 </div>
 
                 
