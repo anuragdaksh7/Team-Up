@@ -6,7 +6,9 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Button } from "../ui/button"
 import { useState } from "react"
 import { Input } from "../ui/input"
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 
 
 const formSchema = z.object({
@@ -23,11 +25,22 @@ const formSchema = z.object({
 })
 
 export function CardWithForm() {
+    const router = useRouter();
     const [teamName, setTeamName] = useState("");
     const [teamDesc, setTeamDesc] = useState("");
 
+    const handleSubmit = async (values) => {
+        // console.log(values);
+        const response = await axios.post("/api/v1/createTeam", values);
+        const data = await response.data;
+        if (data.success) {
+            router.push("/home")
+        }
+        console.log(data.success);
+    }
+
     function onSubmit(values) {
-        console.log(values)
+        handleSubmit(values);
     }
 
     const form = useForm({
@@ -45,43 +58,64 @@ export function CardWithForm() {
                     <CardTitle>Create Team</CardTitle>
                     <CardDescription>Creat your new Team in one-click.</CardDescription>
                 </CardHeader>
-                <Form {...form} >
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                        <FormField
-                            control={form.control}
-                            name="teamName"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Team Name</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="team Name" {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is your public display name.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="teamDesc"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Team Desc</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="team Desc" {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is your public display name.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Button type="submit">Submit</Button>
-                    </form>
-                </Form>
+                <CardContent>
+                    <Form {...form} >
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+                            <FormField
+                                control={form.control}
+                                name="teamName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Team Name</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Team Name"
+                                                value={teamName}
+                                                onChange={
+                                                    (e)=>{
+                                                        setTeamName(e.target.value)
+                                                    }
+                                                }
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="teamDesc"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Team Desc</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Team Desciption"
+                                                value={teamDesc}
+                                                 onChange={
+                                                    (e)=>{
+                                                        setTeamDesc(e.target.value)
+                                                    }
+                                                }
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <CardFooter className="flex justify-between px-0">
+                                <Button onClick={
+                                    (e) => {
+                                        router.push("/home");
+                                    }
+                                } variant="outline">Cancel</Button>
+                                <Button type="submit">Submit</Button>
+                            </CardFooter>
+                        </form>
+                    </Form>
+                </CardContent>
             </Card>
         </div>
     )
