@@ -18,7 +18,7 @@ export default function Page() {
         const data = await response.data;
         console.log("data",data)
         setJoined(data.status);
-        if (data.status) {
+        if (joined) {
             alert("Joined");
             router.push("/home");
         }

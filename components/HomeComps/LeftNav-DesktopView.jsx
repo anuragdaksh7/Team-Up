@@ -5,6 +5,11 @@ import { currentUser } from "@clerk/nextjs";
 import ViewTeams from "./ViewTeams";
 import axios from "axios";
 import RegisterUser from "./RegisterUser";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Button } from "../ui/button";
 // import { useEffect } from "react";
 
 function TeamButtonComponent(props) {
@@ -31,25 +36,40 @@ export default async function LeftNavDesktop() {
         <div className="h-[90lvh] w-1/5 flex flex-col px-6 border-r-2  justify-between">
             <RegisterUser />
             <div className="py-2">
-                <div className="flex flex-col gap-4">
-                    <Link
-                        href="/createTeam"
-                        className="font-semibold w-full bg-[#262626] py-2 px-4 rounded-md "
-                    >Create a New Team</Link>
-                
-                    <Link
-                        href="/Invite"
-                        className="font-semibold w-full bg-[#262626] py-2 px-4 rounded-md "
-                    >Join a Team</Link>
-                </div>
+
+                <Card className="">
+                    <CardHeader>
+                        <CardTitle>Team Controls</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid w-full items-center gap-4">
+                            <div className="flex flex-col space-y-1.5">
+                                <Button asChild>
+                                    <Link
+                                        href="/createTeam"
+                                        className=""
+                                    >Create a New Team</Link>
+                                </Button>
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                                <Button asChild>
+                                    <Link
+                                        href="/Invite"
+                                        className=""
+                                    >Join a Team</Link>
+                                </Button>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
                 <ViewTeams />
             </div>
 
             <div>
-                <div className="bg-[#242424] px-4 py-2 rounded-md flex gap-2 items-center">
-                    <UserButton afterSignOutUrl="/" />
-                    <p>{user?.firstName}</p>
-                </div>
+                <p className="w-full bg-white gap-4 py-2 px-2 flex justify-center rounded-md">
+                    <UserButton className="" showName="true" />
+                </p>
             </div>
         </div>
     )

@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 
-export default function CreateTeamForm(props) {
+export default function CreateTeamForm() {
     // const {userId} = auth();
     const router = useRouter();
 

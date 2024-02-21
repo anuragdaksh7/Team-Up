@@ -15,7 +15,9 @@ import { Button } from "@/components/ui/button";
 import NoteForm from "@/components/Forms/NoteForm";
 import TaskForm from "@/components/Forms/TaskForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import UserHoverCard from "@/components/UserHoverCard";
+import UserHoverCard, { getFirstLetters } from "@/components/UserHoverCard";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Context = React.createContext();
 
@@ -114,24 +116,42 @@ export default function Page({ params }) {
             <div className=" flex flex-col  px-4">
 
               <div className="flex gap-4">
-                <div className="flex items-center capitalize font-bold text-2xl select-none">{(team.teamName) ? team.teamName : "Team Name"}</div>
+
+
+                <HoverCard>
+                  <HoverCardTrigger asChild>
+                    <div className="flex items-center capitalize font-bold text-2xl select-none">
+                      {(team.teamName) ? team.teamName : "Team Name"}
+                    </div>
+                  </HoverCardTrigger>
+                  <HoverCardContent>
+                    <div className="flex justify-between items-center ">
+                      <Avatar>
+                        <AvatarImage src="" />
+                        <AvatarFallback>{getFirstLetters(team?.teamName)}</AvatarFallback>
+                      </Avatar>
+                      <p className=" text-blue-500">{team?.teamDesc}</p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+
 
                 {/* // generate invite link */}
                 <div className=" rounded-md flex flex-col gap-2 px-4">
                   <Button className=" " variant="outline">
-                    <FcInvite  onClick={
-                    () => {
-                      generateLink();
-                      toast("Success", {
-                        description: `Code copied to clipboard ${code}`,
-                      })
-                    }
-                  }  className=" text-xl" />
+                    <FcInvite onClick={
+                      () => {
+                        generateLink();
+                        toast("Success", {
+                          description: `Code copied to clipboard ${code}`,
+                        })
+                      }
+                    } className=" text-xl" />
                   </Button>
-                  
+
                 </div>
 
-                
+
 
               </div>
 

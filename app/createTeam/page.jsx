@@ -1,4 +1,5 @@
 import CreateTeamForm from "@/components/CreateTeam/Form";
+import { CardWithForm } from "@/components/CreateTeam/Form2";
 import Nav from "@/components/Nav";
 import { UserButton, auth, currentUser } from "@clerk/nextjs"
 
@@ -9,7 +10,8 @@ export default function Page() {
     return (
         <div>
             <Nav />
-            <CreateTeamForm userId={userId}/>
+            {/* <CreateTeamForm /> */}
+            <CardWithForm />
         </div>
     )
 }

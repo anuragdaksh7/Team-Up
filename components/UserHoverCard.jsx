@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/hover-card"
 import Link from "next/link"
 
-function getFirstLetters(str) {
+export function getFirstLetters(str="Team Name") {
     // Split the string into an array of words
     const words = str.split(' ');
 
