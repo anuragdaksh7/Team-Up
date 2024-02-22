@@ -30,7 +30,7 @@ export function CardWithForm() {
     const [teamDesc, setTeamDesc] = useState("");
 
     const handleSubmit = async (values) => {
-        // console.log(values);
+        
         const response = await axios.post("/api/v1/createTeam", values);
         const data = await response.data;
         if (data.success) {
