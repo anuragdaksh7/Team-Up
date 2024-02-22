@@ -18,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UserHoverCard, { getFirstLetters } from "@/components/UserHoverCard";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import ChatFunction from "@/components/Chat/ChatFunction";
 
 export const Context = React.createContext();
 
@@ -173,18 +174,6 @@ export default function Page({ params }) {
                                       <Button variant="link">
                                         {
                                           <UserHoverCard email={item[2]} userName={item[0]} Uhref={`/Users/${item[1]}`} key={idx} lead={item[1].toString() == team.leadId.toString()} />
-                                          // (item[1].toString() == team.leadId.toString()) ? (
-                                          //   <>
-                                          //     {/* <Link href={`/Users/${item[1]}`} key={idx} className=" text-red-500 ps-2">
-                                          //       {item[0]}
-                                          //     </Link> */}
-                                          //     <UserHoverCard email={item[2]} userName={item[0]} Uhref={`/Users/${item[1]}`} key={idx} lead={true} />
-                                          //   </>
-                                          // ) :
-                                          //   // <Link href={`/Users/${item[1]}`} key={idx} className=" ps-2">
-                                          //   //   {item[0]}
-                                          //   // </Link>
-                                          //   <UserHoverCard email={item[2]} userName={item[0]} Uhref={`/Users/${item[1]}`} key={idx} lead={false} />
                                         }
                                       </Button>
                                     </div>
@@ -197,6 +186,7 @@ export default function Page({ params }) {
 
                         <div className="flex flex-col gap-2">
                           <>
+                            <ChatFunction team_id={tID} />
                             <NoteForm team_id={tID} />
                             <TaskForm team_id={tID} />
                           </>
