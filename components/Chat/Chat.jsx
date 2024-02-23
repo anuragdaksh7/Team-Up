@@ -17,7 +17,7 @@ const Chat = (props) => {
     <div className='flex justify-start gap-2 text-sm items-center '>
       <div className='flex gap-1 items-center bg-green-400 pe-3 rounded-b-full rounded-r-full'>
         <Avatar className="scale-50">
-          <AvatarFallback>{props.firstLetters.slice(0,2)}</AvatarFallback>
+          <AvatarFallback>{(props.firstLetters.length>2)?props.firstLetters.slice(0,2):props.firstLetters}</AvatarFallback>
         </Avatar>
         <div className='py-1 max-w-60'>{props.message}</div>
       </div>
