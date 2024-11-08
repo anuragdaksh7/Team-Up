@@ -30,6 +30,6 @@ NEXT_PUBLIC_CLERK_SIGN_UP_URL = /sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL = /home
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL = /home
 
-MONGODB_URI = mongodb+srv://<username>:<password>@cluster0.t5t9fvx.mongodb.net/test
+MONGODB_URI = 
 
 ```
